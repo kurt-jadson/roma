@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html">
+	<h:head>
+		<title>#{i18n['system.shell.name']}</title>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css" />
+		<h:outputScript library="jquery" name="jquery-1.11.2.min.js" />
+		<h:outputScript library="bootstrap" name="js/bootstrap.min.js" />
+		<h:outputStylesheet library="assets" name="login.css" />
+	</h:head>
+	<h:body>
+		<div class="container">
+			<h:form styleClass="form-signin">
+
+				<h:outputLabel for="username" 
+							   value="#{i18n['login.username']}:" />
+				<h:inputText id="username" 
+							 value="#{loginController.username}"
+							 required="true"
+							 styleClass="form-control"
+							 label="#{i18n['login.username']}" />
+				<h:message for="username" />
+
+				<h:outputLabel for="password" 
+							   value="#{i18n['login.password']}:" />
+				<h:inputSecret id="password" 
+							   value="#{loginController.password}"
+							   styleClass="form-control"
+							   label="#{i18n['login.password']}" />
+				<h:message for="password" />
+
+				<div class="checkbox">
+					<label>
+						<h:selectBooleanCheckbox id="rememberMe"
+												 value="#{loginController.rememberMe}"/>
+						<h:outputText value="#{i18n['login.rememberMe']}"/>
+					</label>
+				</div>
+
+				<h:commandButton action="#{loginController.authenticate()}"
+								 styleClass="btn btn-lg btn-primary btn-block"
+								 value="#{i18n['login.signin']}" />
+			</h:form>
+		</div>
+	</h:body>
+</html>

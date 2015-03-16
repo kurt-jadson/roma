@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="/WEB-INF/templates/layout.xhtml">
+		<ui:define name="conteudo">
+			<h:form>
+				<div class="row dashboard-metanalise">
+					<div class="col-md-8">
+						<ui:repeat value="#{homeController.metanalises}" 
+								   var="metaanaliseVar">
+							<span class="dashboard-label">#{metaanaliseVar.nome}</span>
+							<div class="progress">
+								<div class="progress-bar" 
+									 role="progressbar" 
+									 aria-valuenow="#{metaanaliseVar.percentual}" 
+									 aria-valuemin="0" 
+									 aria-valuemax="100" 
+									 style="width: #{metaanaliseVar.percentual}%;">
+									#{metaanaliseVar.percentual}%
+								</div>
+							</div>
+						</ui:repeat>
+					</div>
+					<div class="col-md-4">
+						<div class="home-module-icon"></div>
+						<div class="home-module-icon"></div>
+						<div class="home-module-icon"></div>
+						<div class="home-module-icon"></div>
+						<div class="home-module-icon"></div>
+						<div class="home-module-icon"></div>
+						<div class="home-module-icon"></div>
+					</div>
+				</div>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</html>
+

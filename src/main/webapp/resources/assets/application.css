@@ -1,0 +1,26 @@
+body {
+  padding-top: 50px;
+}
+.content {
+  padding: 40px 15px;
+  text-align: center;
+}
+.home-module-icon {
+    display: inline-block;
+    width: 64px;
+    height: 64px;
+    border: 1px solid #ccc;
+    background-color: #eee;
+    margin: 5px;
+}
+
+.dashboard-metanalise span.dashboard-label {
+    display: inline-block;
+    width: 39%;
+    vertical-align: top;
+}
+
+.dashboard-metanalise div.progress {
+    display: inline-block;
+    width: 60%;
+}

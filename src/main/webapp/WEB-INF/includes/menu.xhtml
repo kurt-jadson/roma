@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html">
+	<ui:composition>
+		<h:form>
+			<ul class="nav navbar-nav">
+				<li class="dropdown active">
+					<a href="#" 
+					   class="dropdown-toggle" 
+					   data-toggle="dropdown" 
+					   role="button" 
+					   aria-expanded="false">
+						#{i18n['menu.metanalises']} <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">Listar</a></li>
+						<li><a href="#">Filtros</a></li>
+					</ul>
+				</li>
+
+				<li class="dropdown">
+					<a href="#" 
+					   class="dropdown-toggle" 
+					   data-toggle="dropdown" 
+					   role="button" 
+					   aria-expanded="false">
+						#{i18n['menu.calculos']} <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">Análises</a></li>
+						<li><a href="#">Vieses</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" 
+					   class="dropdown-toggle" 
+					   data-toggle="dropdown" 
+					   role="button" 
+					   aria-expanded="false">
+						#{i18n['menu.graficos']} <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">#{i18n['menu.analises']}</a></li>
+						<li><a href="#">#{i18n['menu.vieses']}</a></li>
+					</ul>
+				</li>
+				<li><a href="#">#{i18n['menu.configuracoes']}</a></li>
+				<li class="dropdown">
+					<a href="#" 
+					   class="dropdown-toggle" 
+					   data-toggle="dropdown" 
+					   role="button" 
+					   aria-expanded="false">
+						... <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">#{i18n['menu.ajuda']}</a></li>
+						<li><a href="#">#{i18n['menu.autores']}</a></li>
+					</ul>
+				</li>
+				<li>
+					<h:commandLink action="#{loginController.logout()}" value="Sair" />
+				</li>
+			</ul>
+		</h:form>
+	</ui:composition>
+</html>
