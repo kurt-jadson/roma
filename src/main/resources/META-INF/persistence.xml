@@ -2,7 +2,13 @@
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
   <persistence-unit name="romaPU" transaction-type="JTA">
     <jta-data-source>java:/jboss/datasources/MysqlDS</jta-data-source>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties/>
+	
+	<mapping-file>META-INF/orms/Usuario-orm.xml</mapping-file>
+	<mapping-file>META-INF/orms/Pesquisador-orm.xml</mapping-file>
+	<mapping-file>META-INF/orms/Metanalise-orm.xml</mapping-file>
+	<mapping-file>META-INF/orms/MetanaliseEtapa-orm.xml</mapping-file>
+	<mapping-file>META-INF/orms/MetanaliseMetanaliseEtapa-orm.xml</mapping-file>
   </persistence-unit>
 </persistence>

@@ -16,6 +16,8 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "SYS_USUARIO")
 public class Usuario implements Serializable {
+
+	public static final String NQ_BUSCAR_POR_USERNAME = "Usuario.buscarPorUsername";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
