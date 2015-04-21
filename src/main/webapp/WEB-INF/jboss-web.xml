@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jboss-web>
-  <context-root>/roma</context-root>
+  <context-root>/smadp</context-root>
 </jboss-web>

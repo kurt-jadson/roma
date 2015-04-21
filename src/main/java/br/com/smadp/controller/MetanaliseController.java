@@ -1,10 +1,9 @@
-package br.com.roma.controller;
+package br.com.smadp.controller;
 
-import br.com.roma.boundary.MetanaliseService;
-import br.com.roma.entity.Metanalise;
-import java.io.Serializable;
+import br.com.smadp.boundary.MetanaliseService;
+import br.com.smadp.entity.Metanalise;
 import java.util.List;
-import javax.faces.bean.ViewScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -13,8 +12,8 @@ import javax.inject.Named;
  * @author kurt
  */
 @Named
-@ViewScoped
-public class HomeController implements Serializable {
+@RequestScoped
+public class MetanaliseController {
 	
 	@Inject
 	private MetanaliseService metanaliseService;
@@ -22,9 +21,9 @@ public class HomeController implements Serializable {
 	
 	public List<Metanalise> getMetanalises() {
 		if(metanalises == null) {
-			metanalises = metanaliseService.buscarNaoFinalizadas();
+			metanalises = metanaliseService.buscarTodas();
 		}
 		return metanalises;
-	}
+	}	
 	
 }

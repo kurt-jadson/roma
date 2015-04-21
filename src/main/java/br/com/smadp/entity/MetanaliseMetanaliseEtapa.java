@@ -1,4 +1,4 @@
-package br.com.roma.entity;
+package br.com.smadp.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -26,6 +26,10 @@ public class MetanaliseMetanaliseEtapa implements Serializable {
 	private MetanaliseEtapa metanaliseEtapa;
 	private Boolean concluida;
 
+	public Boolean getConcluida() {
+		return concluida;
+	}
+	
 	@Override
 	public int hashCode() {
 		int hash = 7;

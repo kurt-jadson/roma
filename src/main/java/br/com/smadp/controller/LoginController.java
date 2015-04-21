@@ -1,4 +1,4 @@
-package br.com.roma.controller;
+package br.com.smadp.controller;
 
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;

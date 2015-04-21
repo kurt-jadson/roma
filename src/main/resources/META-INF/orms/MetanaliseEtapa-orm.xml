@@ -4,7 +4,7 @@
 				 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
 				 version="1.0">
 
-	<entity class="br.com.roma.entity.MetanaliseEtapa">
+	<entity class="br.com.smadp.entity.MetanaliseEtapa">
 	</entity>
 	
 </entity-mappings>

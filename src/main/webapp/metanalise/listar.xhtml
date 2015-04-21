@@ -2,10 +2,48 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:h="http://java.sun.com/jsf/html"
-	  xmlns:ui="http://java.sun.com/jsf/facelets">
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/WEB-INF/templates/layout.xhtml">
 		<ui:define name="conteudo">
-			Listar
+			<h:form>
+				<div class="panel panel-default">
+					<div class="panel-heading">Listando metanálises</div>
+					<div class="panel-body">
+						<h:dataTable value="#{metanaliseController.metanalises}"
+									 var="metanaliseVar"
+									 styleClass="table">
+							<h:column>
+								<f:facet name="header">
+									#{i18n['metanalise.titulo']}
+								</f:facet>
+								#{metanaliseVar.titulo}
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									#{i18n['metanalise.pesquisador']}
+								</f:facet>
+								#{metanaliseVar.pesquisadorInclusao.usuario.username}
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									#{i18n['metanalise.dataInclusao']}
+								</f:facet>
+								<h:outputText value="#{metanaliseVar.dataInclusao}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</h:column>
+							<h:column>
+								<h:commandLink styleClass="glyphicon glyphicon-pencil" />
+							</h:column>
+							<h:column>
+								<h:commandLink styleClass="glyphicon glyphicon-remove" />
+							</h:column>
+
+						</h:dataTable>
+					</div>
+				</div>
+			</h:form>
 		</ui:define>
 	</ui:composition>
 </html>

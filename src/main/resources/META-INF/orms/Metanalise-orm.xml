@@ -4,16 +4,25 @@
 				 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
 				 version="1.0">
 
-	<entity class="br.com.roma.entity.Metanalise">
+	<entity class="br.com.smadp.entity.Metanalise">
+		
+		<named-query name="Metanalise.buscarTodas">
+			<query>
+				<![CDATA[
+					SELECT m
+					  FROM br.com.smadp.entity.Metanalise m
+				]]>
+			</query>
+		</named-query>
 		
 		<named-query name="Metanalise.buscarNaoFinalizadas">
 			<query>
 				<![CDATA[
-					SELECT DISTINCT m
-					  FROM br.com.roma.entity.Metanalise m
-					  JOIN m.etapas e
+		   SELECT DISTINCT m
+					  FROM br.com.smadp.entity.Metanalise m
+				JOIN FETCH m.etapas e
 					 WHERE (SELECT COUNT(1)
-							  FROM br.com.roma.entity.MetanaliseMetanaliseEtapa mme
+							  FROM br.com.smadp.entity.MetanaliseMetanaliseEtapa mme
 							 WHERE mme.metanalise = m
 							   AND mme.concluida = true) < 5
 				]]>

@@ -1,6 +1,6 @@
-package br.com.roma.boundary;
+package br.com.smadp.boundary;
 
-import br.com.roma.entity.Usuario;
+import br.com.smadp.entity.Usuario;
 import java.io.Serializable;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;

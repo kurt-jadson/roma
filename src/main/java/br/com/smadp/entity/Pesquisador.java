@@ -1,4 +1,4 @@
-package br.com.roma.entity;
+package br.com.smadp.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -6,25 +6,33 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author kurt
  */
 @Entity
-@Table(name = "DG_METANALISE_ETAPA")
-public class MetanaliseEtapa implements Serializable {
+@Table(name = "SYS_PESQUISADOR")
+public class Pesquisador implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String nome;
+	@NotNull
+	@OneToOne
+	private Usuario usuario;
 
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	
 	@Override
 	public int hashCode() {
 		int hash = 7;
-		hash = 67 * hash + Objects.hashCode(this.id);
+		hash = 79 * hash + Objects.hashCode(this.id);
 		return hash;
 	}
 
@@ -36,7 +44,7 @@ public class MetanaliseEtapa implements Serializable {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final MetanaliseEtapa other = (MetanaliseEtapa) obj;
+		final Pesquisador other = (Pesquisador) obj;
 		if (!Objects.equals(this.id, other.id)) {
 			return false;
 		}
@@ -45,7 +53,7 @@ public class MetanaliseEtapa implements Serializable {
 
 	@Override
 	public String toString() {
-		return "MetanaliseEtapa{" + "id=" + id + ", nome=" + nome + '}';
+		return "Pesquisador{" + "id=" + id + ", usuario=" + usuario + '}';
 	}
 	
 }

@@ -5,7 +5,7 @@
 			  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
 	<application>
 		<resource-bundle>
-			<base-name>br.com.roma.i18n</base-name>
+			<base-name>br.com.smadp.i18n</base-name>
 			<var>i18n</var>
 		</resource-bundle>
 	</application>

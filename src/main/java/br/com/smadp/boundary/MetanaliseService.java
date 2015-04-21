@@ -1,7 +1,6 @@
-package br.com.roma.boundary;
+package br.com.smadp.boundary;
 
-import br.com.roma.entity.Metanalise;
-import br.com.roma.entity.Usuario;
+import br.com.smadp.entity.Metanalise;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -20,6 +19,12 @@ public class MetanaliseService {
 
 	@PersistenceContext
 	private EntityManager em;
+	
+	public List<Metanalise> buscarTodas() {
+		TypedQuery<Metanalise> query = em.createNamedQuery(Metanalise.NQ_BUSCAR_TODAS, 
+				Metanalise.class);
+		return query.getResultList();
+	}
 	
 	public List<Metanalise> buscarNaoFinalizadas() {
 		TypedQuery<Metanalise> query = em.createNamedQuery(Metanalise.NQ_BUSCAR_NAO_FINALIZADAS, 

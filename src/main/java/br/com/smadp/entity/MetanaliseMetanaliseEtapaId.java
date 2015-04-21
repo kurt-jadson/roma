@@ -1,9 +1,9 @@
-package br.com.roma.entity;
+package br.com.smadp.entity;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
 
 /**
  *
@@ -13,10 +13,10 @@ import javax.persistence.JoinColumn;
 public class MetanaliseMetanaliseEtapaId implements Serializable {
 
 	@Basic
-	@JoinColumn(name = "METANALISE_ID")
+	@Column(name = "METANALISE_ID")
 	private long metanalise;
 	@Basic
-	@JoinColumn(name = "METANALISEETAPA_ID")
+	@Column(name = "METANALISEETAPA_ID")
 	private long etapa;
 
 	public MetanaliseMetanaliseEtapaId() {

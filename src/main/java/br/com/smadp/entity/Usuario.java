@@ -1,4 +1,4 @@
-package br.com.roma.entity;
+package br.com.smadp.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
