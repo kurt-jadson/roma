@@ -18,7 +18,7 @@
 				<h:outputLabel for="username" 
 							   value="#{i18n['login.username']}:" />
 				<h:inputText id="username" 
-							 value="#{loginController.username}"
+							 value="#{loginController.usuario.username}"
 							 required="true"
 							 styleClass="form-control"
 							 label="#{i18n['login.username']}" />
@@ -27,7 +27,7 @@
 				<h:outputLabel for="password" 
 							   value="#{i18n['login.password']}:" />
 				<h:inputSecret id="password" 
-							   value="#{loginController.password}"
+							   value="#{loginController.usuario.password}"
 							   styleClass="form-control"
 							   label="#{i18n['login.password']}" />
 				<h:message for="password" />

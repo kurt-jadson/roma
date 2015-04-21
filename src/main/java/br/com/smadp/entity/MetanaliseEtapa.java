@@ -16,11 +16,28 @@ import javax.persistence.Table;
 @Table(name = "DG_METANALISE_ETAPA")
 public class MetanaliseEtapa implements Serializable {
 	
+	public static final MetanaliseEtapa BANCO_DADOS = new MetanaliseEtapa(1L);
+	public static final MetanaliseEtapa QUALIDADE_ESTUDOS = new MetanaliseEtapa(2L);
+	public static final MetanaliseEtapa ANALISE_TABULAR = new MetanaliseEtapa(3L);
+	public static final MetanaliseEtapa ANALISE_GRAFICA = new MetanaliseEtapa(4L);
+	public static final MetanaliseEtapa ANALISE_VIES_PUBLICACAO = new MetanaliseEtapa(5L);
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
 
+	public MetanaliseEtapa() {
+	}
+
+	public MetanaliseEtapa(Long id) {
+		this.id = id;
+	}
+
+	public Long getId() {
+		return id;
+	}
+	
 	@Override
 	public int hashCode() {
 		int hash = 7;

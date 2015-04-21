@@ -1,6 +1,6 @@
 package br.com.smadp.entity;
 
-import java.io.Serializable;
+import br.com.smadp.framework.PersistentEntity;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +16,9 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "SYS_PESQUISADOR")
-public class Pesquisador implements Serializable {
+public class Pesquisador implements PersistentEntity {
+
+	public static final String NQ_BUSCAR_POR_USUARIO = "Pesquisador.buscarPorUsuario";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +27,11 @@ public class Pesquisador implements Serializable {
 	@OneToOne
 	private Usuario usuario;
 
+	@Override
+	public boolean isNew() {
+		return id == null;
+	}
+	
 	public Usuario getUsuario() {
 		return usuario;
 	}

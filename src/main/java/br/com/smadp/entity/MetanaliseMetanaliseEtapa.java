@@ -1,9 +1,10 @@
 package br.com.smadp.entity;
 
-import java.io.Serializable;
+import br.com.smadp.framework.PersistentEntity;
 import java.util.Objects;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -14,18 +15,30 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "DG_METANALISE_METANALISE_ETAPA")
-public class MetanaliseMetanaliseEtapa implements Serializable {
+public class MetanaliseMetanaliseEtapa implements PersistentEntity {
 	
 	@EmbeddedId
-	private MetanaliseMetanaliseEtapaId id;
-	@NotNull
+	private MetanaliseMetanaliseEtapaPK id;
 	@ManyToOne
+	@JoinColumn(insertable = false, updatable = false)
 	private Metanalise metanalise;
-	@NotNull
 	@ManyToOne
+	@JoinColumn(insertable = false, updatable = false)
 	private MetanaliseEtapa metanaliseEtapa;
 	private Boolean concluida;
 
+	public MetanaliseMetanaliseEtapa() {
+	}
+
+	public MetanaliseMetanaliseEtapa(Metanalise metanalise, MetanaliseEtapa etapa) {
+		this.id = new MetanaliseMetanaliseEtapaPK(metanalise, etapa.getId());
+	}
+
+	@Override
+	public boolean isNew() {
+		return id == null;
+	}
+	
 	public Boolean getConcluida() {
 		return concluida;
 	}

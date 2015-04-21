@@ -1,9 +1,14 @@
 package br.com.smadp.controller;
 
+import br.com.smadp.boundary.UsuarioService;
+import br.com.smadp.entity.Usuario;
+import br.com.smadp.framework.JSFUtils;
+import br.com.smadp.framework.LoggedIn;
+import java.io.Serializable;
 import java.util.logging.Logger;
-import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
+import javax.enterprise.context.SessionScoped;
+import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
 import javax.inject.Named;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -15,61 +20,53 @@ import org.apache.shiro.subject.Subject;
  * @author kurt
  */
 @Named
-@RequestScoped
-public class LoginController {
+@SessionScoped
+public class LoginController implements Serializable {
 
-	private String username;
-	private String password;
+	@Inject
+	private UsuarioService service;
 	private boolean rememberMe = false;
+	private Usuario usuario;
 
-	private static final Logger log = Logger.getLogger(LoginController.class
+	private static final Logger LOGGER = Logger.getLogger(LoginController.class
 			.getName());
 
 	public String authenticate() {
-		UsernamePasswordToken token = new UsernamePasswordToken(username,
-				password);
+		UsernamePasswordToken token = new UsernamePasswordToken(usuario.getUsername(),
+				usuario.getPassword());
 		token.setRememberMe(rememberMe);
 		Subject currentUser = SecurityUtils.getSubject();
 
 		try {
 			currentUser.login(token);
+			usuario = service.buscarPorUsername(usuario.getUsername());
 		} catch (AuthenticationException e) {
-			log.warning(e.getMessage());
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage("Usuário ou senha incorretos."));
+			LOGGER.warning(e.getMessage());
+			JSFUtils.addMessage(JSFUtils.translate("smadp.mensagens.0002"));
 			return "/login";
 		}
-		return "/home";
+		return "/home?faces-redirect=true";
 	}
 
 	public String logout() {
-
 		Subject currentUser = SecurityUtils.getSubject();
 		try {
 			currentUser.logout();
 		} catch (Exception e) {
-			log.warning(e.toString());
+			LOGGER.warning(e.toString());
 		}
 		return "/login";
 	}
 
-	public String getUsername() {
-		return username;
+	@Produces
+	@LoggedIn
+	public Usuario getUsuario() {
+		if(usuario == null) {
+			usuario = new Usuario();
+		}
+		return usuario;
 	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
+	
 	public boolean getRememberMe() {
 		return rememberMe;
 	}

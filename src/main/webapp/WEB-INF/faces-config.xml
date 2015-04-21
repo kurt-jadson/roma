@@ -9,4 +9,14 @@
 			<var>i18n</var>
 		</resource-bundle>
 	</application>
+	
+	<navigation-rule>
+		<from-view-id>/metanalise/cadastrar.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/metanalise/listar</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
 </faces-config>

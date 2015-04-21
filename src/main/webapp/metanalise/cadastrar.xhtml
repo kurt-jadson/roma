@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/WEB-INF/templates/layout.xhtml">
+		<ui:define name="conteudo">
+			<h:messages errorClass="alert alert-danger" />
+			<div class="page-header">
+				<h1>#{i18n['metanalise.cadastro']}</h1>
+			</div>
+
+			<h:form>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-1">
+							<h:outputLabel for="titulo" value="#{i18n['metanalise.titulo']}" />
+						</div>
+						<div class="col-md-2">
+							<h:inputText id="titulo"
+										 value="#{metanaliseController.metanalise.titulo}"
+										 required="true"
+										 requiredMessage="#{i18n['smadp.mensagens.0001']}"
+										 styleClass="form-control" />
+						</div>
+						<div class="col-md-1">
+							<h:message for="titulo" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-1">
+							<h:commandButton value="#{i18n['botao.salvar']}"
+											 action="#{metanaliseController.salvar()}"
+											 styleClass="btn btn-default"/>
+						</div>
+					</div>
+				</div>
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</html>

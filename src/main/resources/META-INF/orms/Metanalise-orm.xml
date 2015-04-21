@@ -29,6 +29,17 @@
 			</query>
 		</named-query>
 		
+		<named-query name="Metanalise.countTitulo">
+			<query>
+				<![CDATA[
+					SELECT COUNT(1)
+					  FROM br.com.smadp.entity.Metanalise m
+					 WHERE m.titulo = :titulo
+					   AND (:id IS NULL OR m.id <> :id)
+				]]>
+			</query>
+		</named-query>
+		
 	</entity>
 	
 </entity-mappings>

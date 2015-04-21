@@ -1,17 +1,21 @@
 package br.com.smadp.entity;
 
-import java.io.Serializable;
+import br.com.smadp.framework.PersistentEntity;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -19,31 +23,56 @@ import javax.persistence.Temporal;
  */
 @Entity
 @Table(name = "DG_METANALISE")
-public class Metanalise implements Serializable {
+public class Metanalise implements PersistentEntity {
 	
 	public static final String NQ_BUSCAR_NAO_FINALIZADAS = "Metanalise.buscarNaoFinalizadas";
 	public static final String NQ_BUSCAR_TODAS = "Metanalise.buscarTodas";
+	public static final String NQ_COUNT_TITULO = "Metanalise.countTitulo";
 	private static final int QUANTIDADE_ETAPAS = 5;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotNull
 	private String titulo;
+	@NotNull
 	@ManyToOne
 	private Pesquisador pesquisadorInclusao;
+	@NotNull
 	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
 	private Date dataInclusao;
-	@OneToMany(mappedBy = "metanalise")
-	private List<MetanaliseMetanaliseEtapa> etapas;
+	@OneToMany(mappedBy = "metanalise", cascade = CascadeType.PERSIST)
+	private final List<MetanaliseMetanaliseEtapa> etapas;
 
+	public Metanalise() {
+		etapas = new ArrayList<>();
+	}
+
+	@Override
+	public boolean isNew() {
+		return id == null;
+	}
+
+	public Long getId() {
+		return id;
+	}
+	
 	public String getTitulo() {
 		return titulo;
 	}
 
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+	
 	public Pesquisador getPesquisadorInclusao() {
 		return pesquisadorInclusao;
 	}
 
+	public void setPesquisadorInclusao(Pesquisador pesquisadorInclusao) {
+		this.pesquisadorInclusao = pesquisadorInclusao;
+	}
+	
 	public Date getDataInclusao() {
 		return dataInclusao;
 	}
@@ -51,12 +80,15 @@ public class Metanalise implements Serializable {
 	public Integer getPercentual() {
 		int concluidas = 0;
 		for(MetanaliseMetanaliseEtapa etapa : etapas) {
-			System.out.println(etapa.getConcluida());
 			if(Boolean.TRUE.equals(etapa.getConcluida())) {
 				concluidas += 1;
 			}
 		}
 		return concluidas * 100 / QUANTIDADE_ETAPAS;
+	}
+	
+	public void addAll(List<MetanaliseMetanaliseEtapa> etapas) {
+		this.etapas.addAll(etapas);
 	}
 
 	@Override
@@ -79,6 +111,11 @@ public class Metanalise implements Serializable {
 			return false;
 		}
 		return true;
+	}
+	
+	@PrePersist
+	private void prePersist() {
+		dataInclusao = new Date();
 	}
 
 	@Override
