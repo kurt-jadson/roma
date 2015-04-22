@@ -49,7 +49,7 @@ public class MetanaliseController implements Serializable {
 		} catch (SmadpException ex) {
 			String mensagem = JSFUtils.translate(ex.getLocalizedMessage());
 			LOGGER.warning(mensagem);
-			JSFUtils.addMessage(mensagem);
+			JSFUtils.addErrorMessage(mensagem);
 		}
 		return null;
 	}

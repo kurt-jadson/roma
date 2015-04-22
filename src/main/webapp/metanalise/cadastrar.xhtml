@@ -3,10 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:h="http://java.sun.com/jsf/html"
 	  xmlns:ui="http://java.sun.com/jsf/facelets"
-	  xmlns:f="http://xmlns.jcp.org/jsf/core">
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:s="http://www.lassitercg.com/jsf">
     <ui:composition template="/WEB-INF/templates/layout.xhtml">
 		<ui:define name="conteudo">
-			<h:messages errorClass="alert alert-danger" />
+			<div class="mensagem-snipet">
+				<h:messages errorClass="alert alert-danger" globalOnly="true" />
+			</div>
 			<div class="page-header">
 				<h1>#{i18n['metanalise.cadastro']}</h1>
 			</div>
@@ -14,18 +17,40 @@
 			<h:form>
 				<div class="container-fluid">
 					<div class="row">
-						<div class="col-md-1">
-							<h:outputLabel for="titulo" value="#{i18n['metanalise.titulo']}" />
+						<div class="col-md-12">
+							<div class="form-group">
+								<h:outputLabel for="titulo" value="#{i18n['metanalise.titulo']}" />					
+								<h:inputText id="titulo"
+											 value="#{metanaliseController.metanalise.titulo}"
+											 required="true"
+											 requiredMessage="#{i18n['smadp.mensagens.0001']}"
+											 styleClass="form-control #{not component.valid ? 'error' : ''}" />
+								<h:message for="titulo" />
+							</div>
 						</div>
-						<div class="col-md-2">
-							<h:inputText id="titulo"
-										 value="#{metanaliseController.metanalise.titulo}"
-										 required="true"
-										 requiredMessage="#{i18n['smadp.mensagens.0001']}"
-										 styleClass="form-control" />
-						</div>
-						<div class="col-md-1">
-							<h:message for="titulo" />
+					</div>
+					<div class="row">
+						<div class="form-group col-md-12">
+							<s:sheet id="sheet"
+									 value="#{metanaliseController.metanalises}"
+									 var="row"
+									 height="400"
+									 showRowHeaders="false">
+
+								<f:facet name="header">
+									<h:outputText value="Metanálises" />
+								</f:facet>                      
+
+								<s:column headerText="Id" 
+										  colWidth="100"
+										  value="#{row.id}" />
+								<s:column headerText="Título" 
+										  colWidth="100"
+										  value="#{row.titulo}" />
+								<s:column headerText="Pesquisador" 
+										  colWidth="100"
+										  value="#{row.pesquisadorInclusao.usuario.username}" />
+							</s:sheet>
 						</div>
 					</div>
 					<div class="row">

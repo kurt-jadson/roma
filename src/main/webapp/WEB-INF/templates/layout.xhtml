@@ -2,16 +2,17 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:h="http://java.sun.com/jsf/html"
-	  xmlns:ui="http://java.sun.com/jsf/facelets">
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>#{i18n['system.shell.name']}</title>
         <meta name="viewport" content="width=device-width"/>
 		<h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css" />
-		<h:outputScript library="jquery" name="jquery-1.11.2.min.js" />
 		<h:outputScript library="bootstrap" name="js/bootstrap.min.js" />
 		<h:outputStylesheet library="assets" name="application.css" />
     </h:head>
     <h:body>
+		<p:button style="display:none;" />
         <nav class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container">
 				<div class="navbar-header">

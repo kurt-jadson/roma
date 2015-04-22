@@ -23,6 +23,8 @@ import org.apache.shiro.subject.Subject;
 @SessionScoped
 public class LoginController implements Serializable {
 
+	private static final String OUTCOME_HOME = "/home?faces-redirect=true";
+	
 	@Inject
 	private UsuarioService service;
 	private boolean rememberMe = false;
@@ -30,22 +32,29 @@ public class LoginController implements Serializable {
 
 	private static final Logger LOGGER = Logger.getLogger(LoginController.class
 			.getName());
+	
+	public String redirectIfAuthenticated() {
+		if(SecurityUtils.getSubject().isAuthenticated()) {
+			return OUTCOME_HOME;
+		}
+		return null;
+	}
 
 	public String authenticate() {
 		UsernamePasswordToken token = new UsernamePasswordToken(usuario.getUsername(),
 				usuario.getPassword());
 		token.setRememberMe(rememberMe);
 		Subject currentUser = SecurityUtils.getSubject();
-
+		
 		try {
 			currentUser.login(token);
 			usuario = service.buscarPorUsername(usuario.getUsername());
 		} catch (AuthenticationException e) {
 			LOGGER.warning(e.getMessage());
-			JSFUtils.addMessage(JSFUtils.translate("smadp.mensagens.0002"));
+			JSFUtils.addErrorMessage(JSFUtils.translate("smadp.mensagens.0002"));
 			return "/login";
 		}
-		return "/home?faces-redirect=true";
+		return OUTCOME_HOME;
 	}
 
 	public String logout() {

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:h="http://java.sun.com/jsf/html">
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core">
 	<h:head>
 		<title>#{i18n['system.shell.name']}</title>
 		<meta charset="utf-8" />
@@ -10,6 +11,9 @@
 		<h:outputScript library="jquery" name="jquery-1.11.2.min.js" />
 		<h:outputScript library="bootstrap" name="js/bootstrap.min.js" />
 		<h:outputStylesheet library="assets" name="login.css" />
+		<f:metadata>
+			<f:viewAction action="#{loginController.redirectIfAuthenticated()}" />
+		</f:metadata>
 	</h:head>
 	<h:body>
 		<div class="container">
