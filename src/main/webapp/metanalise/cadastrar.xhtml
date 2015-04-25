@@ -4,8 +4,7 @@
 	  xmlns:h="http://java.sun.com/jsf/html"
 	  xmlns:ui="http://java.sun.com/jsf/facelets"
 	  xmlns:s="http://www.lassitercg.com/jsf"
-	  xmlns:p="http://primefaces.org/ui"
-	  xmlns:f="http://xmlns.jcp.org/jsf/core">
+	  xmlns:p="http://primefaces.org/ui">
     <ui:composition template="/WEB-INF/templates/layout.xhtml">
 		<ui:define name="conteudo">
 			<div class="mensagem-snipet">
@@ -41,33 +40,40 @@
 								<s:column headerText="#{i18n['metanalise.numero']}" 
 										  colWidth="15"
 										  value="#{row.numero}"
-										  sortBy="#{row.numero}" />
+										  sortBy="#{row.numero}"
+										  sortOrder="ascending"
+										  readonly="true" />
 								<s:column headerText="#{i18n['metanalise.titulo']}" 
 										  colWidth="60"
-										  value="#{row.titulo}"
-										  sortBy="#{row.titulo}" />
+										  sortBy="#{row.titulo}"
+										  sortOrder="ascending"
+										  value="#{row.titulo}" />
 								<s:column headerText="#{i18n['metanalise.autor']}" 
 										  colWidth="60"
 										  value="#{row.autor}"
-										  sortBy="#{row.autor}" />
+										  sortBy="#{row.autor}"
+										  sortOrder="ascending" />
 								<s:column headerText="#{i18n['metanalise.tp']}" 
 										  colWidth="15"
 										  value="#{row.tp}"
-										  sortBy="#{row.tp}" />
+										  sortBy="#{row.tp}"
+										  sortOrder="ascending" />
 								<s:column headerText="#{i18n['metanalise.tn']}" 
 										  colWidth="15"
 										  value="#{row.tn}"
-										  sortBy="#{row.tn}" />
+										  sortBy="#{row.tn}"
+										  sortOrder="ascending" />
 								<s:column headerText="#{i18n['metanalise.fp']}" 
 										  colWidth="15"
 										  value="#{row.fp}"
-										  sortBy="#{row.fp}" />
+										  sortBy="#{row.fp}"
+										  sortOrder="ascending" />
 								<s:column headerText="#{i18n['metanalise.fn']}" 
 										  colWidth="15"
 										  value="#{row.fn}"
-										  sortBy="#{row.fn}" />
-								<p:ajax listener="#{metanaliseController.cellEdit}"
-										onstart="onCellEditStart()" />
+										  sortBy="#{row.fn}"
+										  sortOrder="ascending" />
+								<p:ajax listener="#{metanaliseController.cellEdit}" />
 							</s:sheet>
 						</div>
 					</div>
@@ -80,15 +86,6 @@
 					</div>
 				</div>
 			</h:form>
-
-			<script type="text/javascript">
-				//<![CDATA[
-				function onCellEditStart() {
-					window.widget_metanaliseForm_sheet = PF('widget_metanaliseForm_sheet');
-				}
-				//]]>
-			</script>
-			
 		</ui:define>
 	</ui:composition>
 </html>
