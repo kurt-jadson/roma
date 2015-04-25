@@ -18,5 +18,10 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
+
+	<component>
+		<component-type>com.lassitercg.faces.components.sheet</component-type>
+		<component-class>br.com.smadp.component.sheet.Sheet</component-class>
+	</component>
 	
 </faces-config>
