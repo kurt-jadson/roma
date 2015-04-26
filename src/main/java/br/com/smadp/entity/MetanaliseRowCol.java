@@ -13,38 +13,55 @@ import javax.persistence.Table;
  * @author kurt
  */
 @Entity
-@Table(name = "DG_METANALISE_METANALISE_ETAPA")
-public class MetanaliseMetanaliseEtapa implements PersistentEntity {
-	
+@Table(name = "DG_METANALISE_ROW_COL")
+public class MetanaliseRowCol implements PersistentEntity {
+
 	@EmbeddedId
-	private MetanaliseMetanaliseEtapaPK id;
+	private MetanaliseRowColPK id;
 	@ManyToOne
 	@JoinColumn(insertable = false, updatable = false)
-	private Metanalise metanalise;
+	private MetanaliseRow row;
 	@ManyToOne
 	@JoinColumn(insertable = false, updatable = false)
-	private MetanaliseEtapa metanaliseEtapa;
-	private Boolean concluida;
+	private MetanaliseCol col;
+	private Long valor;
+	//incluído unicamente para conseguir mapear, pois já está no MetanaliseRow e no MetanaliseCol
+	@ManyToOne
+	@JoinColumn
+	private Metanalise metanalise; 
 
-	public MetanaliseMetanaliseEtapa() {
+	public MetanaliseRowCol() {
 	}
 
-	public MetanaliseMetanaliseEtapa(Metanalise metanalise, MetanaliseEtapa etapa) {
-		this.id = new MetanaliseMetanaliseEtapaPK(metanalise, etapa.getId());
+	public MetanaliseRowCol(MetanaliseRow row, MetanaliseCol col, Long valor) {
+		this.id = new MetanaliseRowColPK(row, col);
+		this.valor = valor;
 	}
-
+	
 	@Override
 	public boolean isNew() {
 		return id == null;
 	}
-	
-	public Boolean getConcluida() {
-		return concluida;
+
+	public MetanaliseRowColPK getId() {
+		return id;
+	}
+
+	public MetanaliseRow getRow() {
+		return row;
+	}
+
+	public MetanaliseCol getCol() {
+		return col;
+	}
+
+	public Long getValor() {
+		return valor;
 	}
 	
 	@Override
 	public int hashCode() {
-		int hash = 7;
+		int hash = 3;
 		hash = 47 * hash + Objects.hashCode(this.id);
 		return hash;
 	}
@@ -57,16 +74,13 @@ public class MetanaliseMetanaliseEtapa implements PersistentEntity {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final MetanaliseMetanaliseEtapa other = (MetanaliseMetanaliseEtapa) obj;
+		final MetanaliseRowCol other = (MetanaliseRowCol) obj;
 		if (!Objects.equals(this.id, other.id)) {
 			return false;
 		}
 		return true;
 	}
-
-	@Override
-	public String toString() {
-		return "MetanaliseMetanaliseEtapa{" + "id=" + id + ", metanalise=" + metanalise + ", metanaliseEtapa=" + metanaliseEtapa + ", concluida=" + concluida + '}';
-	}
+	
+	
 	
 }

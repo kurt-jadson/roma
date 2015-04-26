@@ -2,6 +2,9 @@ package br.com.smadp.framework;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+import javax.el.ExpressionFactory;
+import javax.el.ValueExpression;
+import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
@@ -30,6 +33,12 @@ public class JSFUtils {
 	public static void addMessage(String msg, String clientId, Severity severity) {
 		FacesMessage message = new FacesMessage(severity, msg, null);
 		FacesContext.getCurrentInstance().addMessage(clientId, message);
+	}
+	
+	public static ValueExpression createValueExpression(String expression, Class<?> expectedType) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExpressionFactory expFactory = context.getApplication().getExpressionFactory();
+		return expFactory.createValueExpression(context.getELContext(), expression, expectedType);
 	}
 	
 }

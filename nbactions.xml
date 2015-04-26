@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-deploy 8081</actionName>
+            <displayName>deploy 8081</displayName>
+            <goals>
+                <goal>wildfly:deploy</goal>
+            </goals>
+            <activatedProfiles>
+                <activatedProfile>wildfly-local</activatedProfile>
+            </activatedProfiles>
+        </action>
+</actions>

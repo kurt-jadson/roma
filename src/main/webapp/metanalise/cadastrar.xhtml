@@ -4,11 +4,21 @@
 	  xmlns:h="http://java.sun.com/jsf/html"
 	  xmlns:ui="http://java.sun.com/jsf/facelets"
 	  xmlns:s="http://www.lassitercg.com/jsf"
-	  xmlns:p="http://primefaces.org/ui">
+	  xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/WEB-INF/templates/layout.xhtml">
+		<ui:define name="metadata">
+			<f:metadata>
+				<f:viewParam name="metanalise" 
+							 value="#{metanaliseController.metanalise.id}" />
+				<f:viewAction action="#{metanaliseController.loadMetanalise()}" 
+							  if="#{not empty param['metanalise']}" />
+			</f:metadata>
+		</ui:define>
+		
 		<ui:define name="conteudo">
-			<div class="mensagem-snipet">
-				<h:messages errorClass="alert alert-danger" globalOnly="true" />
+			<div class="mensagem-snippet">
+				<h:messages errorClass="alert alert-danger" />
 			</div>
 			<div class="page-header">
 				<h1>#{i18n['metanalise.cadastro']}</h1>
@@ -25,7 +35,49 @@
 											 required="true"
 											 requiredMessage="#{i18n['smadp.mensagens.0001']}"
 											 styleClass="form-control #{not component.valid ? 'error' : ''}" />
-								<h:message for="titulo" />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-2">
+							<div class="form-group metanalise-control">
+								<div class="metanalise-control-linha">#{i18n['metanalise.linha']}</div>
+								<div>
+									<button class="btn btn-default btn-add" 
+											onclick="$('#metanaliseForm\\:addRowBtn').trigger('click');
+													return false;">
+										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+									</button>
+									<h:commandButton id="addRowBtn" 
+													 styleClass="hidden">
+										<f:ajax render="metanaliseForm:sheet"
+												listener="#{metanaliseController.adicionarLinha()}" />
+									</h:commandButton>
+								</div>	
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group metanalise-control">
+								<div>
+									<h:inputText id="nomeColuna" 
+												 value="#{metanaliseController.nomeColuna}" 
+												 styleClass="form-control #{not component.valid ? 'error' : ''}"
+												 pt:placeholder="#{i18n['metanalise.nomeColuna']}"
+												 required="true" />
+								</div>
+								<div>
+									<button class="btn btn-default btn-add"
+											onclick="$('#metanaliseForm\\:addColBtn').trigger('click');
+												return false;">
+										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+									</button>
+									<h:commandButton id="addColBtn"
+													 styleClass="hidden">
+										<f:ajax execute="@this nomeColuna"
+												render="metanaliseForm:sheet nomeColuna"
+												listener="#{metanaliseController.adicionarColuna()}" />
+									</h:commandButton>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -35,8 +87,9 @@
 									 value="#{metanaliseController.estudos}"
 									 var="row"
 									 height="400"
-									 showRowHeaders="false">
-								
+									 showRowHeaders="false"
+									 binding="#{metanaliseController.sheet}">
+
 								<s:column headerText="#{i18n['metanalise.numero']}" 
 										  colWidth="15"
 										  value="#{row.numero}"
@@ -47,7 +100,9 @@
 										  colWidth="60"
 										  sortBy="#{row.titulo}"
 										  sortOrder="ascending"
-										  value="#{row.titulo}" />
+										  value="#{row.titulo}"
+										  required="true"
+										  requiredMessage="#{i18n['metanalise.sheet.titulo.requiredMessage']}" />
 								<s:column headerText="#{i18n['metanalise.autor']}" 
 										  colWidth="60"
 										  value="#{row.autor}"
@@ -73,7 +128,6 @@
 										  value="#{row.fn}"
 										  sortBy="#{row.fn}"
 										  sortOrder="ascending" />
-								<p:ajax listener="#{metanaliseController.cellEdit}" />
 							</s:sheet>
 						</div>
 					</div>

@@ -15,6 +15,17 @@
 			</query>
 		</named-query>
 		
+		<named-query name="Metanalise.buscarPorId">
+			<query>
+				<![CDATA[
+					SELECT m
+					  FROM br.com.smadp.entity.Metanalise m
+		   LEFT JOIN FETCH m.baseDados
+					 WHERE m.id = ?1
+				]]>
+			</query>
+		</named-query>
+		
 		<named-query name="Metanalise.buscarNaoFinalizadas">
 			<query>
 				<![CDATA[

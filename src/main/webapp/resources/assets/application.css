@@ -8,7 +8,7 @@ body {
     text-align: center;
 }
 
-.mensagem-snipet ul {
+.mensagem-snippet ul {
     list-style: none;
     padding: 0;
 }
@@ -43,4 +43,24 @@ label:after {
 
 .form-group input.error {
     border-color: #b94a48;
+}
+
+.metanalise-control {
+    width: 160px;
+    text-align: center;
+    border-width: 1px;
+    border-color: #ccc;
+    border-style: solid;
+    -webkit-border-radius: 4px;
+       -moz-border-radius: 4px;
+            border-radius: 4px;
+    padding: 9px;    
+}
+
+.metanalise-control-linha {
+    line-height: 34px;
+}
+
+.btn-add {
+    margin-top: 4px;
 }

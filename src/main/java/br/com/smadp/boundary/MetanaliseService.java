@@ -38,6 +38,12 @@ public class MetanaliseService {
 		return query.getResultList();
 	}
 	
+	public Metanalise buscarPorId(Long id) {
+		TypedQuery<Metanalise> query = em.createNamedQuery(Metanalise.NQ_BUSCAR_POR_ID, Metanalise.class);
+		query.setParameter(1, id);
+		return query.getSingleResult();
+	}
+	
 	public List<Metanalise> buscarNaoFinalizadas() {
 		TypedQuery<Metanalise> query = em.createNamedQuery(Metanalise.NQ_BUSCAR_NAO_FINALIZADAS, 
 				Metanalise.class);
@@ -54,7 +60,7 @@ public class MetanaliseService {
 		Pesquisador pesquisador = query.getSingleResult();
 		
 		if(metanalise.isNew()) {
-			metanalise.addAll(gerarEtapas(metanalise));
+			metanalise.addAllEtapas(gerarEtapas(metanalise));
 			metanalise.setPesquisadorInclusao(pesquisador);
 			em.persist(metanalise);
 		} else {

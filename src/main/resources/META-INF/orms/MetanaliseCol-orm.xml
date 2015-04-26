@@ -4,16 +4,7 @@
 				 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
 				 version="1.0">
 
-	<entity class="br.com.smadp.entity.MetanaliseRow">
-		<named-query name="MetanaliseRow.buscarPorMetanaliseId">
-			<query>
-				<![CDATA[
-					SELECT mr
-					  FROM br.com.smadp.entity.MetanaliseRow mr
-					 WHERE mr.metanalise.id = ?1
-				]]>
-			</query>
-		</named-query>
+	<entity class="br.com.smadp.entity.MetanaliseCol">
 	</entity>
 	
 </entity-mappings>

@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.smadp.component.sheet;
 
+import com.lassitercg.faces.components.sheet.BadUpdate;
 import com.lassitercg.faces.components.sheet.Column;
-import com.lassitercg.faces.components.util.VarBuilder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -25,7 +20,7 @@ import org.primefaces.model.BeanPropertyComparator;
  * @author kurt
  */
 public class Sheet extends com.lassitercg.faces.components.sheet.Sheet {
-	
+
 	private List<Object> sortedList;
 
 	@Override
@@ -79,27 +74,41 @@ public class Sheet extends com.lassitercg.faces.components.sheet.Sheet {
 		}
 		RequestContext.getCurrentInstance().getScriptsToExecute().add(sb.toString());
 	}
-	
+
+	@Override
+	public String getBadDataValue() {
+		VarBuilder vb = new VarBuilder(null, true);
+		for (BadUpdate badUpdate : getBadUpdates()) {
+			final int row = badUpdate.getBadRowIndex();
+			final int col = getRenderIndexFromRealIdx(badUpdate.getBadColIndex());
+			vb.appendRowColProperty(row, col, badUpdate.getBadMessage().replace("'", "&apos;"), true);
+		}
+		return vb.closeVar().toString();
+	}
+
 	@Override
 	public List<Object> getSortedValues() {
-		if (sortedList == null)
+		if (sortedList == null) {
 			sortAndFilter();
+		}
 		return sortedList;
 	}
-	
+
 	@Override
 	public void sortAndFilter() {
 		sortedList = new ArrayList<>();
 		Collection<?> values = (Collection<?>) getValue();
-		if (values == null || values.isEmpty())
+		if (values == null || values.isEmpty()) {
 			return;
+		}
 
 		boolean filters = false;
-		for (Column col : getColumns())
+		for (Column col : getColumns()) {
 			if (StringUtils.isNotEmpty(col.getFilterValue())) {
 				filters = true;
 				break;
 			}
+		}
 
 		if (filters) {
 			// iterate and add those matching the filters
@@ -109,22 +118,25 @@ public class Sheet extends com.lassitercg.faces.components.sheet.Sheet {
 			for (Object obj : values) {
 				requestMap.put(var, obj);
 				try {
-					if (matchesFilter(obj))
+					if (matchesFilter(obj)) {
 						sortedList.add(obj);
+					}
 				} finally {
 					requestMap.remove(var);
 				}
 			}
-		} else
+		} else {
 			sortedList.addAll(values);
+		}
 
 		ValueExpression veSortBy = this.getValueExpression("sortBy");
-		if (veSortBy == null)
+		if (veSortBy == null) {
 			return;
+		}
 
-		Collections.sort(sortedList, 
-				new BeanPropertyComparator(veSortBy, getVar(), 
+		Collections.sort(sortedList,
+				new BeanPropertyComparator(veSortBy, getVar(),
 						convertSortOrder(), null, false, Locale.US, 0));
-	}	
+	}
 
 }

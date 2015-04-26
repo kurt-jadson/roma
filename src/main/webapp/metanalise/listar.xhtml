@@ -34,7 +34,10 @@
 								</h:outputText>
 							</h:column>
 							<h:column>
-								<h:commandLink styleClass="glyphicon glyphicon-pencil" />
+								<h:link styleClass="glyphicon glyphicon-pencil"
+										outcome="cadastrar">
+									<f:param name="metanalise" value="#{metanaliseVar.id}" />
+								</h:link>
 							</h:column>
 							<h:column>
 								<h:commandLink styleClass="glyphicon glyphicon-remove" />

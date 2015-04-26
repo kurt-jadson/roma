@@ -10,5 +10,8 @@
 	<mapping-file>META-INF/orms/Metanalise-orm.xml</mapping-file>
 	<mapping-file>META-INF/orms/MetanaliseEtapa-orm.xml</mapping-file>
 	<mapping-file>META-INF/orms/MetanaliseMetanaliseEtapa-orm.xml</mapping-file>
+	<mapping-file>META-INF/orms/MetanaliseRow-orm.xml</mapping-file>
+	<mapping-file>META-INF/orms/MetanaliseCol-orm.xml</mapping-file>
+	<mapping-file>META-INF/orms/MetanaliseRowCol-orm.xml</mapping-file>
   </persistence-unit>
 </persistence>

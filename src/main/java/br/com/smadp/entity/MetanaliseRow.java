@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -17,6 +18,8 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "DG_METANALISE_ROW")
 public class MetanaliseRow implements PersistentEntity {
+
+	public static final String NQ_BUSCAR_POR_METANALISE_ID = "MetanaliseRow.buscarPorMetanaliseId";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,8 +35,10 @@ public class MetanaliseRow implements PersistentEntity {
 	private Long tn;
 	private Long fp;
 	private Long fn;
+	@NotNull
+	@ManyToOne
+	private Metanalise metanalise;
 	
-
 	@Override
 	public boolean isNew() {
 		return id == null;
@@ -101,6 +106,14 @@ public class MetanaliseRow implements PersistentEntity {
 
 	public void setFn(Long fn) {
 		this.fn = fn;
+	}
+
+	public Metanalise getMetanalise() {
+		return metanalise;
+	}
+
+	public void setMetanalise(Metanalise metanalise) {
+		this.metanalise = metanalise;
 	}
 	
 	@Override

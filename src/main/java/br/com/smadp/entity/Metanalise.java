@@ -2,6 +2,7 @@ package br.com.smadp.entity;
 
 import br.com.smadp.framework.PersistentEntity;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -27,6 +28,7 @@ public class Metanalise implements PersistentEntity {
 	
 	public static final String NQ_BUSCAR_NAO_FINALIZADAS = "Metanalise.buscarNaoFinalizadas";
 	public static final String NQ_BUSCAR_TODAS = "Metanalise.buscarTodas";
+	public static final String NQ_BUSCAR_POR_ID = "Metanalise.buscarPorId";
 	public static final String NQ_COUNT_TITULO = "Metanalise.countTitulo";
 	private static final int QUANTIDADE_ETAPAS = 5;
 
@@ -43,9 +45,16 @@ public class Metanalise implements PersistentEntity {
 	private Date dataInclusao;
 	@OneToMany(mappedBy = "metanalise", cascade = CascadeType.PERSIST)
 	private final List<MetanaliseMetanaliseEtapa> etapas;
+	@OneToMany(mappedBy = "metanalise", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+	private List<MetanaliseRow> rows;
+	@OneToMany(mappedBy = "metanalise", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+	private List<MetanaliseCol> cols;
+	@OneToMany(mappedBy = "metanalise", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+	private final List<MetanaliseRowCol> baseDados;
 
 	public Metanalise() {
 		etapas = new ArrayList<>();
+		baseDados = new ArrayList<>();
 	}
 
 	@Override
@@ -55,6 +64,10 @@ public class Metanalise implements PersistentEntity {
 
 	public Long getId() {
 		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	public String getTitulo() {
@@ -87,8 +100,33 @@ public class Metanalise implements PersistentEntity {
 		return concluidas * 100 / QUANTIDADE_ETAPAS;
 	}
 	
-	public void addAll(List<MetanaliseMetanaliseEtapa> etapas) {
+	public void addAllEtapas(List<MetanaliseMetanaliseEtapa> etapas) {
 		this.etapas.addAll(etapas);
+	}
+
+	public List<MetanaliseRow> getRows() {
+		return rows;
+	}
+
+	public void setRows(List<MetanaliseRow> rows) {
+		this.rows = rows;
+	}
+	
+	public List<MetanaliseCol> getCols() {
+		return cols;
+	}
+
+	public void setCols(List<MetanaliseCol> cols) {
+		this.cols = cols;
+	}
+	
+	public List<MetanaliseRowCol> getBaseDados() {
+		return Collections.unmodifiableList(baseDados);
+	}
+	
+	public void addAllBancoDados(List<MetanaliseRowCol> bancoDados) {
+		this.baseDados.clear();
+		this.baseDados.addAll(bancoDados);
 	}
 
 	@Override
