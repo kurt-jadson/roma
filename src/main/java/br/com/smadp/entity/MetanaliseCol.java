@@ -19,6 +19,8 @@ import javax.validation.constraints.Size;
 @Table(name = "DG_METANALISE_COL")
 public class MetanaliseCol implements PersistentEntity {
 
+	public static final String NQ_BUSCAR_POR_METANALISE_ID = "MetanaliseCol.buscarPorMetanaliseId";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

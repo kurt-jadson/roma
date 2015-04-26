@@ -1,8 +1,10 @@
 package br.com.smadp.boundary;
 
 import br.com.smadp.entity.Metanalise;
+import br.com.smadp.entity.MetanaliseCol;
 import br.com.smadp.entity.MetanaliseEtapa;
 import br.com.smadp.entity.MetanaliseMetanaliseEtapa;
+import br.com.smadp.entity.MetanaliseRow;
 import br.com.smadp.entity.Pesquisador;
 import br.com.smadp.entity.Usuario;
 import br.com.smadp.exception.SmadpException;
@@ -31,35 +33,51 @@ public class MetanaliseService {
 	@Inject
 	@LoggedIn
 	private Instance<Usuario> usuarioLogado;
-	
+
 	public List<Metanalise> buscarTodas() {
-		TypedQuery<Metanalise> query = em.createNamedQuery(Metanalise.NQ_BUSCAR_TODAS, 
+		TypedQuery<Metanalise> query = em.createNamedQuery(Metanalise.NQ_BUSCAR_TODAS,
 				Metanalise.class);
 		return query.getResultList();
 	}
-	
+
 	public Metanalise buscarPorId(Long id) {
 		TypedQuery<Metanalise> query = em.createNamedQuery(Metanalise.NQ_BUSCAR_POR_ID, Metanalise.class);
 		query.setParameter(1, id);
 		return query.getSingleResult();
 	}
-	
+
 	public List<Metanalise> buscarNaoFinalizadas() {
-		TypedQuery<Metanalise> query = em.createNamedQuery(Metanalise.NQ_BUSCAR_NAO_FINALIZADAS, 
+		TypedQuery<Metanalise> query = em.createNamedQuery(Metanalise.NQ_BUSCAR_NAO_FINALIZADAS,
 				Metanalise.class);
 		return query.getResultList();
 	}
-	
+
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void salvar(Metanalise metanalise) throws SmadpException {
 		validarTitulo(metanalise);
-		
-		TypedQuery<Pesquisador> query = em.createNamedQuery(Pesquisador.NQ_BUSCAR_POR_USUARIO, 
+
+		TypedQuery<Pesquisador> query = em.createNamedQuery(Pesquisador.NQ_BUSCAR_POR_USUARIO,
 				Pesquisador.class);
 		query.setParameter(1, usuarioLogado.get());
 		Pesquisador pesquisador = query.getSingleResult();
-		
-		if(metanalise.isNew()) {
+
+		for (MetanaliseRow row : metanalise.getRows()) {
+			if (row.isNew()) {
+				em.persist(row);
+			} else {
+				em.merge(row);
+			}
+		}
+
+		for (MetanaliseCol col : metanalise.getCols()) {
+			if (col.isNew()) {
+				em.persist(col);
+			} else {
+				em.merge(col);
+			}
+		}
+
+		if (metanalise.isNew()) {
 			metanalise.addAllEtapas(gerarEtapas(metanalise));
 			metanalise.setPesquisadorInclusao(pesquisador);
 			em.persist(metanalise);
@@ -67,17 +85,17 @@ public class MetanaliseService {
 			em.merge(metanalise);
 		}
 	}
-	
+
 	private void validarTitulo(Metanalise metanalise) throws SmadpException {
 		TypedQuery<Long> query = em.createNamedQuery(Metanalise.NQ_COUNT_TITULO, Long.class);
 		query.setParameter("id", metanalise.getId());
 		query.setParameter("titulo", metanalise.getTitulo());
 		Long count = query.getSingleResult();
-		if(count > 0) {
+		if (count > 0) {
 			throw new SmadpException("smadp.mensagens.1000");
 		}
 	}
-	
+
 	private List<MetanaliseMetanaliseEtapa> gerarEtapas(Metanalise metanalise) {
 		List<MetanaliseMetanaliseEtapa> etapas = new ArrayList<>();
 		etapas.add(new MetanaliseMetanaliseEtapa(metanalise, MetanaliseEtapa.BANCO_DADOS));
@@ -87,5 +105,5 @@ public class MetanaliseService {
 		etapas.add(new MetanaliseMetanaliseEtapa(metanalise, MetanaliseEtapa.ANALISE_VIES_PUBLICACAO));
 		return etapas;
 	}
-	
+
 }

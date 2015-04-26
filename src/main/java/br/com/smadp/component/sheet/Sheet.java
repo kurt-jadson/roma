@@ -31,7 +31,7 @@ public class Sheet extends com.lassitercg.faces.components.sheet.Sheet {
 		for (Integer row : dirtyRows) {
 			setRowIndex(context, row);
 			// data is array of array of data
-			VarBuilder vbRow = new VarBuilder(null, false);
+			com.lassitercg.faces.components.util.VarBuilder vbRow = new com.lassitercg.faces.components.util.VarBuilder(null, false);
 			for (int col = 0; col < getColumns().size(); col++) {
 				final Column column = getColumns().get(col);
 				if (!column.isRendered()) {
