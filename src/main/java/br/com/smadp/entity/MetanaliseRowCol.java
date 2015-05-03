@@ -2,9 +2,10 @@ package br.com.smadp.entity;
 
 import br.com.smadp.framework.PersistentEntity;
 import java.util.Objects;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -16,25 +17,21 @@ import javax.persistence.Table;
 @Table(name = "DG_METANALISE_ROW_COL")
 public class MetanaliseRowCol implements PersistentEntity {
 
-	@EmbeddedId
-	private MetanaliseRowColPK id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	@ManyToOne
-	@JoinColumn(insertable = false, updatable = false)
 	private MetanaliseRow row;
 	@ManyToOne
-	@JoinColumn(insertable = false, updatable = false)
 	private MetanaliseCol col;
-	private Long valor;
-	//incluído unicamente para conseguir mapear, pois já está no MetanaliseRow e no MetanaliseCol
-	@ManyToOne
-	@JoinColumn
-	private Metanalise metanalise; 
+	private Long valor; 
 
 	public MetanaliseRowCol() {
 	}
 
 	public MetanaliseRowCol(MetanaliseRow row, MetanaliseCol col, Long valor) {
-		this.id = new MetanaliseRowColPK(row, col);
+		this.row = row;
+		this.col = col;
 		this.valor = valor;
 	}
 	
@@ -43,7 +40,7 @@ public class MetanaliseRowCol implements PersistentEntity {
 		return id == null;
 	}
 
-	public MetanaliseRowColPK getId() {
+	public Long getId() {
 		return id;
 	}
 

@@ -1,10 +1,8 @@
 package br.com.smadp.boundary;
 
 import br.com.smadp.entity.Metanalise;
-import br.com.smadp.entity.MetanaliseCol;
 import br.com.smadp.entity.MetanaliseEtapa;
 import br.com.smadp.entity.MetanaliseMetanaliseEtapa;
-import br.com.smadp.entity.MetanaliseRow;
 import br.com.smadp.entity.Pesquisador;
 import br.com.smadp.entity.Usuario;
 import br.com.smadp.exception.SmadpException;
@@ -60,22 +58,6 @@ public class MetanaliseService {
 				Pesquisador.class);
 		query.setParameter(1, usuarioLogado.get());
 		Pesquisador pesquisador = query.getSingleResult();
-
-		for (MetanaliseRow row : metanalise.getRows()) {
-			if (row.isNew()) {
-				em.persist(row);
-			} else {
-				em.merge(row);
-			}
-		}
-
-		for (MetanaliseCol col : metanalise.getCols()) {
-			if (col.isNew()) {
-				em.persist(col);
-			} else {
-				em.merge(col);
-			}
-		}
 
 		if (metanalise.isNew()) {
 			metanalise.addAllEtapas(gerarEtapas(metanalise));

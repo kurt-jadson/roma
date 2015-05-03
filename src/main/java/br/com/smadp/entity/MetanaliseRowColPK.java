@@ -2,9 +2,9 @@ package br.com.smadp.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 /**
  *
@@ -13,17 +13,27 @@ import javax.persistence.ManyToOne;
 @Embeddable
 public class MetanaliseRowColPK implements Serializable {
 	
-	@ManyToOne
-	@JoinColumn(name = "ROW_ID", referencedColumnName = "ID")
-	private MetanaliseRow metanaliseRow;
-	@ManyToOne
-	@JoinColumn(name = "COL_ID", referencedColumnName = "ID")
-	private MetanaliseCol metanaliseCol;
+//	@ManyToOne
+//	@JoinColumn(name = "ROW_ID", referencedColumnName = "ID", insertable = false, updatable = false)
+//	private MetanaliseRow metanaliseRow;
+//	@ManyToOne
+//	@JoinColumn(name = "COL_ID", referencedColumnName = "ID", insertable = false, updatable = false)
+//	private MetanaliseCol metanaliseCol;
+	@Basic
+	@Column(name = "ROW_ID", insertable = false, updatable = false)
+	private Long metanaliseRow;
+	@Basic
+	@Column(name = "COL_ID", insertable = false, updatable = false)
+	private Long metanaliseCol;
 
 	public MetanaliseRowColPK() {
 	}
 
-	public MetanaliseRowColPK(MetanaliseRow metanaliseRow, MetanaliseCol metanaliseCol) {
+//	public MetanaliseRowColPK(MetanaliseRow metanaliseRow, MetanaliseCol metanaliseCol) {
+//		this.metanaliseRow = metanaliseRow;
+//		this.metanaliseCol = metanaliseCol;
+//	}
+	public MetanaliseRowColPK(Long metanaliseRow, Long metanaliseCol) {
 		this.metanaliseRow = metanaliseRow;
 		this.metanaliseCol = metanaliseCol;
 	}
@@ -31,8 +41,8 @@ public class MetanaliseRowColPK implements Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 5;
-		hash = 61 * hash + Objects.hashCode(this.metanaliseRow);
-		hash = 61 * hash + Objects.hashCode(this.metanaliseCol);
+		hash = 17 * hash + Objects.hashCode(this.metanaliseRow);
+		hash = 17 * hash + Objects.hashCode(this.metanaliseCol);
 		return hash;
 	}
 
@@ -53,7 +63,7 @@ public class MetanaliseRowColPK implements Serializable {
 		}
 		return true;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "MetanaliseRowColPK{" + "metanaliseRow=" + metanaliseRow + ", metanaliseCol=" + metanaliseCol + '}';

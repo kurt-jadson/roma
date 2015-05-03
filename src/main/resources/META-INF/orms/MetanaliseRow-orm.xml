@@ -5,15 +5,6 @@
 				 version="1.0">
 
 	<entity class="br.com.smadp.entity.MetanaliseRow">
-		<named-query name="MetanaliseRow.buscarPorMetanaliseId">
-			<query>
-				<![CDATA[
-					SELECT mr
-					  FROM br.com.smadp.entity.MetanaliseRow mr
-					 WHERE mr.metanalise.id = ?1
-				]]>
-			</query>
-		</named-query>
 	</entity>
 	
 </entity-mappings>

@@ -5,7 +5,7 @@
 				 version="1.0">
 
 	<entity class="br.com.smadp.entity.Metanalise">
-		
+
 		<named-query name="Metanalise.buscarTodas">
 			<query>
 				<![CDATA[
@@ -20,7 +20,7 @@
 				<![CDATA[
 					SELECT m
 					  FROM br.com.smadp.entity.Metanalise m
-		   LEFT JOIN FETCH m.baseDados
+		   LEFT JOIN FETCH m.rows row
 					 WHERE m.id = ?1
 				]]>
 			</query>

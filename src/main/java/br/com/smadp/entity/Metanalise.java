@@ -2,7 +2,6 @@ package br.com.smadp.entity;
 
 import br.com.smadp.framework.PersistentEntity;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -49,12 +48,9 @@ public class Metanalise implements PersistentEntity {
 	private List<MetanaliseRow> rows;
 	@OneToMany(mappedBy = "metanalise", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	private List<MetanaliseCol> cols;
-	@OneToMany(mappedBy = "metanalise", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-	private final List<MetanaliseRowCol> baseDados;
 
 	public Metanalise() {
 		etapas = new ArrayList<>();
-		baseDados = new ArrayList<>();
 	}
 
 	@Override
@@ -120,15 +116,6 @@ public class Metanalise implements PersistentEntity {
 		this.cols = cols;
 	}
 	
-	public List<MetanaliseRowCol> getBaseDados() {
-		return Collections.unmodifiableList(baseDados);
-	}
-	
-	public void addAllBancoDados(List<MetanaliseRowCol> bancoDados) {
-		this.baseDados.clear();
-		this.baseDados.addAll(bancoDados);
-	}
-
 	@Override
 	public int hashCode() {
 		int hash = 3;

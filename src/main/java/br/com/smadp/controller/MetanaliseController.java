@@ -1,7 +1,6 @@
 package br.com.smadp.controller;
 
 import br.com.smadp.boundary.MetanaliseColService;
-import br.com.smadp.boundary.MetanaliseRowService;
 import br.com.smadp.boundary.MetanaliseService;
 import br.com.smadp.entity.Metanalise;
 import br.com.smadp.entity.MetanaliseCol;
@@ -40,8 +39,6 @@ public class MetanaliseController implements Serializable {
 	@Inject
 	private MetanaliseService metanaliseService;
 	@Inject
-	private MetanaliseRowService rowService;
-	@Inject
 	private MetanaliseColService colService;
 	private List<Metanalise> metanalises;
 	private List<MetanaliseRow> estudos;
@@ -69,23 +66,38 @@ public class MetanaliseController implements Serializable {
 
 	public List<MetanaliseRow> getEstudos() {
 		if (estudos == null) {
-			List<MetanaliseCol> cols;
+			List<MetanaliseCol> cols = new ArrayList<>();
 			if (metanalise.isNew()) {
 				estudos = new ArrayList<>();
-				cols = new ArrayList<>();
-
-				MetanaliseRow row = new MetanaliseRow();
-				row.setNumero(1L);
-				row.setMetanalise(getMetanalise());
-				estudos.add(row);
+				estudos.add(getNovaLinha());
+				getMetanalise().setRows(estudos);
 			} else {
-				estudos = rowService.buscarRowsPorMetanalise(getMetanalise().getId());
+				estudos = getMetanalise().getRows();
 				cols = colService.buscarColsPorMetanalise(getMetanalise().getId());
+
+				for (MetanaliseCol col : cols) {
+					Column column = createColumn(col.getNome());
+					getSheet().getColumns().add(column);
+					getSheet().getChildren().add(column);
+				}
+
+				for (MetanaliseRow row : getMetanalise().getRows()) {
+					for (MetanaliseRowCol rowCol : row.getColunasDinamicas()) {
+						row.getValores().put(rowCol.getCol().getNome(), rowCol.getValor());
+					}
+				}
+
 			}
-			getMetanalise().setRows(estudos);
 			getMetanalise().setCols(cols);
 		}
 		return estudos;
+	}
+
+	private MetanaliseRow getNovaLinha() {
+		MetanaliseRow row = new MetanaliseRow();
+		row.setNumero(1L);
+		row.setMetanalise(getMetanalise());
+		return row;
 	}
 
 	public Sheet getSheet() {
@@ -107,17 +119,15 @@ public class MetanaliseController implements Serializable {
 	// Listeners ---------------------------------------------------------------
 	public String salvar() {
 		try {
-			List<MetanaliseRowCol> dados = new ArrayList<>();
 			for (MetanaliseRow row : getEstudos()) {
 				for (Entry<String, Long> entry : row.getValores().entrySet()) {
 					MetanaliseCol col = getColPorNome(entry.getKey());
 					Long valor = entry.getValue();
 					MetanaliseRowCol rowCol = new MetanaliseRowCol(row, col, valor);
-					dados.add(rowCol);
+					row.getColunasDinamicas().add(rowCol);
 				}
 			}
 
-			getMetanalise().addAllBancoDados(dados);
 			metanaliseService.salvar(getMetanalise());
 			return OUTCOME_SUCESSO;
 		} catch (SmadpException ex) {
@@ -127,10 +137,10 @@ public class MetanaliseController implements Serializable {
 		}
 		return null;
 	}
-	
+
 	private MetanaliseCol getColPorNome(String nome) {
-		for(MetanaliseCol col : getMetanalise().getCols()) {
-			if(col.getNome().equals(nome)) {
+		for (MetanaliseCol col : getMetanalise().getCols()) {
+			if (col.getNome().equals(nome)) {
 				return col;
 			}
 		}
@@ -150,19 +160,23 @@ public class MetanaliseController implements Serializable {
 		coluna.setNome(nomeColuna);
 		getMetanalise().getCols().add(coluna);
 
-		String expression = String.format("#{row.valores['%s']}", nomeColuna);
+		Column column = createColumn(nomeColuna);
+		getSheet().getColumns().add(column);
+		getSheet().getChildren().add(column);
+		nomeColuna = null;
+	}
+
+	private Column createColumn(String nome) {
+		String expression = String.format("#{row.valores['%s']}", nome);
 		ValueExpression ve = JSFUtils.createValueExpression(expression, Long.class);
 		Column column = new Column();
-		column.setHeaderText(nomeColuna);
+		column.setHeaderText(nome);
 		column.setColWidth(15);
 		column.setColType("numeric");
 		column.setValueExpression("value", ve);
 		column.setValueExpression("sortBy", ve);
 		column.setConverter(new LongConverter());
-		getSheet().getColumns().add(column);
-
-		getSheet().getChildren().add(column);
-		nomeColuna = null;
+		return column;
 	}
 
 	// Validators --------------------------------------------------------------
