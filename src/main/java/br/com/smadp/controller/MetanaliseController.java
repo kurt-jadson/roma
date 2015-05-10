@@ -63,7 +63,7 @@ public class MetanaliseController implements Serializable {
 		}
 		return metanalise;
 	}
-
+	
 	public List<MetanaliseRow> getEstudos() {
 		if (estudos == null) {
 			List<MetanaliseCol> cols = new ArrayList<>();
@@ -93,6 +93,12 @@ public class MetanaliseController implements Serializable {
 		return estudos;
 	}
 
+	public void setEstudos(List<MetanaliseRow> estudos) {
+		//Nada há fazer
+		//Este método é utilizado no inputHidden simplesmente para carregar as
+		//colunas da planilha
+	}
+	
 	private MetanaliseRow getNovaLinha() {
 		MetanaliseRow row = new MetanaliseRow();
 		row.setNumero(1L);

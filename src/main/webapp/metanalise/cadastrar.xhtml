@@ -85,6 +85,8 @@
 					</div>
 					<div class="row">
 						<div class="form-group col-md-12">
+							<h:inputHidden value="#{metanaliseController.estudos}"
+										   rendered="#{not empty param['metanalise']}" />
 							<s:sheet id="sheet"
 									 value="#{metanaliseController.estudos}"
 									 var="row"
