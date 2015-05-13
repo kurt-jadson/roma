@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -48,9 +52,20 @@ public class Metanalise implements PersistentEntity {
 	private List<MetanaliseRow> rows;
 	@OneToMany(mappedBy = "metanalise", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	private List<MetanaliseCol> cols;
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private MetodoAgrupamento metodoAgrupamento;
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private MetodoRegressao metodoRegressao;
+	@NotNull
+	@Min(0)
+	@Max(100)
+	private Integer intervaloConfianca;
 
 	public Metanalise() {
 		etapas = new ArrayList<>();
+		intervaloConfianca = 95;
 	}
 
 	@Override
@@ -114,6 +129,30 @@ public class Metanalise implements PersistentEntity {
 
 	public void setCols(List<MetanaliseCol> cols) {
 		this.cols = cols;
+	}
+
+	public MetodoAgrupamento getMetodoAgrupamento() {
+		return metodoAgrupamento;
+	}
+
+	public void setMetodoAgrupamento(MetodoAgrupamento metodoAgrupamento) {
+		this.metodoAgrupamento = metodoAgrupamento;
+	}
+
+	public MetodoRegressao getMetodoRegressao() {
+		return metodoRegressao;
+	}
+
+	public void setMetodoRegressao(MetodoRegressao metodoRegressao) {
+		this.metodoRegressao = metodoRegressao;
+	}
+
+	public Integer getIntervaloConfianca() {
+		return intervaloConfianca;
+	}
+
+	public void setIntervaloConfianca(Integer intervaloConfianca) {
+		this.intervaloConfianca = intervaloConfianca;
 	}
 	
 	@Override

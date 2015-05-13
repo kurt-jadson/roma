@@ -39,6 +39,53 @@
 						</div>
 					</div>
 					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<h:outputLabel for="metodoAgrupamento"
+											   value="#{i18n['metanalise.metodoAgrupamento']}" />
+								<h:selectOneMenu id="metodoAgrupamento"
+												 value="#{metanaliseController.metanalise.metodoAgrupamento}"
+												 styleClass="form-control">
+									<f:selectItems value="#{metanaliseController.metodosAgrupamento}"
+												   var="metodoAgrupamentoVar" 
+												   itemLabel="#{metodoAgrupamentoVar.descricao}"
+												   itemValue="#{metodoAgrupamentoVar}" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<h:outputLabel for="metodoRegressao"
+											   value="#{i18n['metanalise.metodoRegressao']}" />
+								<h:selectOneMenu id="metodoRegressao"
+												 value="#{metanaliseController.metanalise.metodoRegressao}"
+												 styleClass="form-control">
+									<f:selectItems value="#{metanaliseController.metodosRegressao}"
+												   var="metodoRegressaoVar" 
+												   itemLabel="#{metodoRegressaoVar.descricao}"
+												   itemValue="#{metodoRegressaoVar}" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<h:outputLabel for="intervaloConfianca"
+											   value="#{i18n['metanalise.intervaloConfianca']}" />
+								<h:inputText id="intervaloConfianca"
+										     value="#{metanaliseController.metanalise.intervaloConfianca}"
+											 validatorMessage="#{i18n['metanalise.intervaloConfiancao.validatorMessage']}"
+											 styleClass="form-control"
+											 pt:type="number"
+											 pt:min="0"
+											 pt:max="100" />
+							</div>
+						</div>
+					</div>
+					<div class="row">
 						<div class="col-md-2">
 							<div class="form-group metanalise-control">
 								<div class="metanalise-control-linha">#{i18n['metanalise.linha']}</div>

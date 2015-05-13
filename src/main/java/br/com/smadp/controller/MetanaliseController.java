@@ -6,6 +6,8 @@ import br.com.smadp.entity.Metanalise;
 import br.com.smadp.entity.MetanaliseCol;
 import br.com.smadp.entity.MetanaliseRow;
 import br.com.smadp.entity.MetanaliseRowCol;
+import br.com.smadp.entity.MetodoAgrupamento;
+import br.com.smadp.entity.MetodoRegressao;
 import br.com.smadp.exception.SmadpException;
 import br.com.smadp.framework.JSFUtils;
 import com.lassitercg.faces.components.sheet.Column;
@@ -91,6 +93,14 @@ public class MetanaliseController implements Serializable {
 			getMetanalise().setCols(cols);
 		}
 		return estudos;
+	}
+	
+	public MetodoAgrupamento[] getMetodosAgrupamento() {
+		return MetodoAgrupamento.values();
+	}
+	
+	public MetodoRegressao[] getMetodosRegressao() {
+		return MetodoRegressao.values();
 	}
 
 	public void setEstudos(List<MetanaliseRow> estudos) {
@@ -188,6 +198,9 @@ public class MetanaliseController implements Serializable {
 	// Validators --------------------------------------------------------------
 	public void validarNomeColuna(FacesContext context, UIComponent component, Object value)
 			throws ValidatorException {
+		if(!context.getPartialViewContext().isAjaxRequest()) {
+			return;
+		}
 		for (MetanaliseCol col : getMetanalise().getCols()) {
 			if (col.getNome().equals(value.toString())) {
 				String mensagem = JSFUtils.translate("smadp.mensagens.1001");
