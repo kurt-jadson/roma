@@ -64,7 +64,7 @@ public class LoginController implements Serializable {
 		} catch (Exception e) {
 			LOGGER.warning(e.toString());
 		}
-		return "/login";
+		return "/login?faces-redirect=true";
 	}
 
 	@Produces
