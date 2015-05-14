@@ -2,12 +2,16 @@ package br.com.smadp.controller;
 
 import br.com.smadp.boundary.MetanaliseColService;
 import br.com.smadp.boundary.MetanaliseService;
+import br.com.smadp.boundary.PesquisadorService;
+import br.com.smadp.boundary.UsuarioService;
 import br.com.smadp.entity.Metanalise;
 import br.com.smadp.entity.MetanaliseCol;
 import br.com.smadp.entity.MetanaliseRow;
 import br.com.smadp.entity.MetanaliseRowCol;
 import br.com.smadp.entity.MetodoAgrupamento;
-import br.com.smadp.entity.MetodoRegressao;
+import br.com.smadp.entity.MetodoDOR;
+import br.com.smadp.entity.ModeloRegressao;
+import br.com.smadp.entity.Pesquisador;
 import br.com.smadp.exception.SmadpException;
 import br.com.smadp.framework.JSFUtils;
 import com.lassitercg.faces.components.sheet.Column;
@@ -42,8 +46,11 @@ public class MetanaliseController implements Serializable {
 	private MetanaliseService metanaliseService;
 	@Inject
 	private MetanaliseColService colService;
+	@Inject
+	private PesquisadorService pesquisadorService;
 	private List<Metanalise> metanalises;
 	private List<MetanaliseRow> estudos;
+	private List<Pesquisador> pesquisadores;
 	private Metanalise metanalise;
 	private Sheet sheet;
 	private String nomeColuna;
@@ -95,14 +102,26 @@ public class MetanaliseController implements Serializable {
 		return estudos;
 	}
 	
+	public List<Pesquisador> getPesquisadores() {
+		if(pesquisadores == null) {
+			pesquisadores = pesquisadorService.buscarTodos();
+			pesquisadores.remove(pesquisadorService.buscarVinculadoUsuarioLogado());
+		}
+		return pesquisadores;
+	}
+	
 	public MetodoAgrupamento[] getMetodosAgrupamento() {
 		return MetodoAgrupamento.values();
 	}
 	
-	public MetodoRegressao[] getMetodosRegressao() {
-		return MetodoRegressao.values();
+	public ModeloRegressao[] getModelosRegressao() {
+		return ModeloRegressao.values();
 	}
 
+	public MetodoDOR[] getMetodosDOR() {
+		return MetodoDOR.values();
+	}
+	
 	public void setEstudos(List<MetanaliseRow> estudos) {
 		//Nada há fazer
 		//Este método é utilizado no inputHidden simplesmente para carregar as

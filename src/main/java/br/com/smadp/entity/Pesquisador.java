@@ -16,8 +16,9 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "SYS_PESQUISADOR")
-public class Pesquisador implements PersistentEntity {
+public class Pesquisador implements PersistentEntity<Long> {
 
+	public static final String NQ_BUSCAR_TODOS = "Pesquisador.buscarTodos";
 	public static final String NQ_BUSCAR_POR_USUARIO = "Pesquisador.buscarPorUsuario";
 	
 	@Id
@@ -30,6 +31,10 @@ public class Pesquisador implements PersistentEntity {
 	@Override
 	public boolean isNew() {
 		return id == null;
+	}
+
+	public Long getId() {
+		return id;
 	}
 	
 	public Usuario getUsuario() {

@@ -4,14 +4,14 @@ package br.com.smadp.entity;
  *
  * @author kurt
  */
-public enum MetodoRegressao {
+public enum ModeloRegressao {
 
 	A("A"),
 	B("B");
 	
 	private final String descricao;
 	
-	private MetodoRegressao(String descricao) {
+	private ModeloRegressao(String descricao) {
 		this.descricao = descricao;
 	}
 

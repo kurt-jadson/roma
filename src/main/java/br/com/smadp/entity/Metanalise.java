@@ -27,7 +27,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "DG_METANALISE")
-public class Metanalise implements PersistentEntity {
+public class Metanalise implements PersistentEntity<Long> {
 	
 	public static final String NQ_BUSCAR_NAO_FINALIZADAS = "Metanalise.buscarNaoFinalizadas";
 	public static final String NQ_BUSCAR_TODAS = "Metanalise.buscarTodas";
@@ -57,15 +57,26 @@ public class Metanalise implements PersistentEntity {
 	private MetodoAgrupamento metodoAgrupamento;
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	private MetodoRegressao metodoRegressao;
+	private ModeloRegressao modeloRegressao;
 	@NotNull
 	@Min(0)
 	@Max(100)
 	private Integer intervaloConfianca;
+	@NotNull
+	private Boolean preencherCelulasVazias;
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private MetodoDOR metodoDOR;
+	@NotNull
+	private Boolean permitirPesquisadorAuxiliar;
+	@ManyToOne
+	private Pesquisador pesquisadorAuxiliar;
 
 	public Metanalise() {
 		etapas = new ArrayList<>();
 		intervaloConfianca = 95;
+		preencherCelulasVazias = Boolean.TRUE;
+		permitirPesquisadorAuxiliar = Boolean.FALSE;
 	}
 
 	@Override
@@ -139,12 +150,12 @@ public class Metanalise implements PersistentEntity {
 		this.metodoAgrupamento = metodoAgrupamento;
 	}
 
-	public MetodoRegressao getMetodoRegressao() {
-		return metodoRegressao;
+	public ModeloRegressao getModeloRegressao() {
+		return modeloRegressao;
 	}
 
-	public void setMetodoRegressao(MetodoRegressao metodoRegressao) {
-		this.metodoRegressao = metodoRegressao;
+	public void setModeloRegressao(ModeloRegressao modeloRegressao) {
+		this.modeloRegressao = modeloRegressao;
 	}
 
 	public Integer getIntervaloConfianca() {
@@ -153,6 +164,38 @@ public class Metanalise implements PersistentEntity {
 
 	public void setIntervaloConfianca(Integer intervaloConfianca) {
 		this.intervaloConfianca = intervaloConfianca;
+	}
+
+	public Boolean getPreencherCelulasVazias() {
+		return preencherCelulasVazias;
+	}
+
+	public void setPreencherCelulasVazias(Boolean preencherCelulasVazias) {
+		this.preencherCelulasVazias = preencherCelulasVazias;
+	}
+
+	public MetodoDOR getMetodoDOR() {
+		return metodoDOR;
+	}
+
+	public void setMetodoDOR(MetodoDOR metodoDOR) {
+		this.metodoDOR = metodoDOR;
+	}
+
+	public Boolean getPermitirPesquisadorAuxiliar() {
+		return permitirPesquisadorAuxiliar;
+	}
+
+	public void setPermitirPesquisadorAuxiliar(Boolean permitirPesquisadorAuxiliar) {
+		this.permitirPesquisadorAuxiliar = permitirPesquisadorAuxiliar;
+	}
+
+	public Pesquisador getPesquisadorAuxiliar() {
+		return pesquisadorAuxiliar;
+	}
+
+	public void setPesquisadorAuxiliar(Pesquisador pesquisadorAuxiliar) {
+		this.pesquisadorAuxiliar = pesquisadorAuxiliar;
 	}
 	
 	@Override

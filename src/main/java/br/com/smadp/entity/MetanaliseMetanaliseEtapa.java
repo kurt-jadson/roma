@@ -14,7 +14,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "DG_METANALISE_METANALISE_ETAPA")
-public class MetanaliseMetanaliseEtapa implements PersistentEntity {
+public class MetanaliseMetanaliseEtapa implements PersistentEntity<MetanaliseMetanaliseEtapaPK> {
 	
 	@EmbeddedId
 	private MetanaliseMetanaliseEtapaPK id;
@@ -36,6 +36,11 @@ public class MetanaliseMetanaliseEtapa implements PersistentEntity {
 	@Override
 	public boolean isNew() {
 		return id == null;
+	}
+
+	@Override
+	public MetanaliseMetanaliseEtapaPK getId() {
+		return id;
 	}
 	
 	public Boolean getConcluida() {

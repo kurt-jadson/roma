@@ -15,13 +15,13 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "SYS_USUARIO")
-public class Usuario implements PersistentEntity {
+public class Usuario implements PersistentEntity<Long> {
 
 	public static final String NQ_BUSCAR_POR_USERNAME = "Usuario.buscarPorUsername";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 	@NotNull
 	private String username;
 	private String password;
@@ -31,11 +31,12 @@ public class Usuario implements PersistentEntity {
 		return id == null;
 	}
 	
-	public Integer getId() {
+	@Override
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

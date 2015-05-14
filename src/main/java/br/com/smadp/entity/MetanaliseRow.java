@@ -25,7 +25,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "DG_METANALISE_ROW")
-public class MetanaliseRow implements PersistentEntity {
+public class MetanaliseRow implements PersistentEntity<Long> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

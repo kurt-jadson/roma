@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -18,7 +17,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "DG_METANALISE_COL")
-public class MetanaliseCol implements PersistentEntity {
+public class MetanaliseCol implements PersistentEntity<Long> {
 
 	public static final String NQ_BUSCAR_POR_METANALISE_ID = "MetanaliseCol.buscarPorMetanaliseId";
 	

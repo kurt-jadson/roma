@@ -5,6 +5,15 @@
 				 version="1.0">
 
 	<entity class="br.com.smadp.entity.Pesquisador">
+		<named-query name="Pesquisador.buscarTodos">
+			<query>
+				<![CDATA[
+					SELECT p
+					  FROM br.com.smadp.entity.Pesquisador p
+				]]>
+			</query>
+		</named-query>
+		
 		<named-query name="Pesquisador.buscarPorUsuario">
 			<query>
 				<![CDATA[

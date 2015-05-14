@@ -15,7 +15,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "DG_METANALISE_ROW_COL")
-public class MetanaliseRowCol implements PersistentEntity {
+public class MetanaliseRowCol implements PersistentEntity<Long> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

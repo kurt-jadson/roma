@@ -57,15 +57,15 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
-								<h:outputLabel for="metodoRegressao"
-											   value="#{i18n['metanalise.metodoRegressao']}" />
-								<h:selectOneMenu id="metodoRegressao"
-												 value="#{metanaliseController.metanalise.metodoRegressao}"
+								<h:outputLabel for="modeloRegressao"
+											   value="#{i18n['metanalise.modeloRegressao']}" />
+								<h:selectOneMenu id="modeloRegressao"
+												 value="#{metanaliseController.metanalise.modeloRegressao}"
 												 styleClass="form-control">
-									<f:selectItems value="#{metanaliseController.metodosRegressao}"
-												   var="metodoRegressaoVar" 
-												   itemLabel="#{metodoRegressaoVar.descricao}"
-												   itemValue="#{metodoRegressaoVar}" />
+									<f:selectItems value="#{metanaliseController.modelosRegressao}"
+												   var="modeloRegressaoVar" 
+												   itemLabel="#{modeloRegressaoVar.descricao}"
+												   itemValue="#{modeloRegressaoVar}" />
 								</h:selectOneMenu>
 							</div>
 						</div>
@@ -86,11 +86,70 @@
 						</div>
 					</div>
 					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<h:outputLabel for="preencherCelulasVazias"
+											   value="#{i18n['metanalise.preencherCelulasVazias']}" />
+								<h:selectBooleanCheckbox id="preencherCelulasVazias"
+														 value="#{metanaliseController.metanalise.preencherCelulasVazias}"
+														 styleClass="checkbox inline" />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<h:outputLabel for="metodoDOR"
+											   value="#{i18n['metanalise.metodoDOR']}" />
+								<h:selectOneMenu id="metodoDOR"
+												 value="#{metanaliseController.metanalise.metodoDOR}"
+												 styleClass="form-control">
+									<f:selectItems value="#{metanaliseController.metodosDOR}"
+												   var="metodoDORVar" 
+												   itemLabel="#{metodoDORVar.descricao}"
+												   itemValue="#{metodoDORVar}" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<h:outputLabel for="permitirPesquisadorAuxiliar"
+											   value="#{i18n['metanalise.permitirPesquisadorAuxiliar']}" />
+								<h:selectBooleanCheckbox id="permitirPesquisadorAuxiliar"
+														 value="#{metanaliseController.metanalise.permitirPesquisadorAuxiliar}"
+														 styleClass="checkbox inline">
+									<f:ajax render="metanaliseForm:pesquisadorAuxiliar" />
+								</h:selectBooleanCheckbox>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<h:outputLabel for="pesquisadorAuxiliar"
+											   value="#{i18n['metanalise.pesquisadorAuxiliar']}" />
+								<h:selectOneMenu id="pesquisadorAuxiliar"
+												 value="#{metanaliseController.metanalise.pesquisadorAuxiliar}"
+												 styleClass="form-control"
+												 disabled="#{not metanaliseController.metanalise.permitirPesquisadorAuxiliar}"
+												 converter="SelectItemsEntityConverter">
+									<f:selectItem itemLabel="#{i18n['metanalise.deixarQueSistemaEscolha']}" />
+									<f:selectItems value="#{metanaliseController.pesquisadores}"
+												   var="pesquisadorAuxiliarVar" 
+												   itemLabel="#{pesquisadorAuxiliarVar.usuario.username}"
+												   itemValue="#{pesquisadorAuxiliarVar}" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+					</div>
+					<div class="row">
 						<div class="col-md-2">
 							<div class="form-group metanalise-control">
 								<div class="metanalise-control-linha">#{i18n['metanalise.linha']}</div>
 								<div>
-									<button class="btn btn-default btn-add" 
+									<button class="btn btn-default btn-space" 
 											onclick="$('#metanaliseForm\\:addRowBtn').trigger('click');
 													return false;">
 										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -103,7 +162,7 @@
 								</div>	
 							</div>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-2">
 							<div class="form-group metanalise-control">
 								<div>
 									<h:inputText id="nomeColuna" 
@@ -115,7 +174,7 @@
 												 validator="#{metanaliseController.validarNomeColuna}" />
 								</div>
 								<div>
-									<button class="btn btn-default btn-add"
+									<button class="btn btn-default btn-space"
 											onclick="$('#metanaliseForm\\:addColBtn').trigger('click');
 													return false;">
 										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -126,6 +185,17 @@
 												render="metanaliseForm:sheet metanaliseForm:messages nomeColuna"
 												listener="#{metanaliseController.adicionarColuna()}" />
 									</h:commandButton>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group metanalise-control">
+								<div class="metanalise-control-linha">Desfazer</div>
+								<div>
+									<button class="btn btn-default btn-space"
+											onclick="PF('widget_metanaliseForm_sheet').ht.undo(); return false;">
+										<span><h:graphicImage library="images" name="undo.png" /></span>
+									</button>
 								</div>
 							</div>
 						</div>
