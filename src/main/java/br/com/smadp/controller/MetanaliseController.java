@@ -3,7 +3,6 @@ package br.com.smadp.controller;
 import br.com.smadp.boundary.MetanaliseColService;
 import br.com.smadp.boundary.MetanaliseService;
 import br.com.smadp.boundary.PesquisadorService;
-import br.com.smadp.boundary.UsuarioService;
 import br.com.smadp.entity.Metanalise;
 import br.com.smadp.entity.MetanaliseCol;
 import br.com.smadp.entity.MetanaliseRow;
@@ -20,6 +19,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.el.ValueExpression;
 import javax.faces.application.FacesMessage;
@@ -167,7 +167,7 @@ public class MetanaliseController implements Serializable {
 			return OUTCOME_SUCESSO;
 		} catch (SmadpException ex) {
 			String mensagem = JSFUtils.translate(ex.getLocalizedMessage());
-			LOGGER.warning(mensagem);
+			LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
 			JSFUtils.addErrorMessage(mensagem);
 		}
 		return null;

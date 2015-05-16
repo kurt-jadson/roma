@@ -2,12 +2,17 @@ package br.com.smadp.entity;
 
 import br.com.smadp.framework.PersistentEntity;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -25,20 +30,76 @@ public class Pesquisador implements PersistentEntity<Long> {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotNull
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Usuario usuario;
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private MetodoAgrupamento metodoAgrupamento;
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private ModeloRegressao modeloRegressao;
+	@NotNull
+	@Min(0)
+	@Max(100)
+	private Integer intervaloConfianca;
+	@NotNull
+	private Boolean preencherCelulasVazias;
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private MetodoDOR metodoDOR;
 
 	@Override
 	public boolean isNew() {
 		return id == null;
 	}
 
+	@Override
 	public Long getId() {
 		return id;
 	}
 	
 	public Usuario getUsuario() {
 		return usuario;
+	}
+
+	public MetodoAgrupamento getMetodoAgrupamento() {
+		return metodoAgrupamento;
+	}
+
+	public void setMetodoAgrupamento(MetodoAgrupamento metodoAgrupamento) {
+		this.metodoAgrupamento = metodoAgrupamento;
+	}
+
+	public ModeloRegressao getModeloRegressao() {
+		return modeloRegressao;
+	}
+
+	public void setModeloRegressao(ModeloRegressao modeloRegressao) {
+		this.modeloRegressao = modeloRegressao;
+	}
+
+	public Integer getIntervaloConfianca() {
+		return intervaloConfianca;
+	}
+
+	public void setIntervaloConfianca(Integer intervaloConfianca) {
+		this.intervaloConfianca = intervaloConfianca;
+	}
+
+	public Boolean getPreencherCelulasVazias() {
+		return preencherCelulasVazias;
+	}
+
+	public void setPreencherCelulasVazias(Boolean preencherCelulasVazias) {
+		this.preencherCelulasVazias = preencherCelulasVazias;
+	}
+
+	public MetodoDOR getMetodoDOR() {
+		return metodoDOR;
+	}
+
+	public void setMetodoDOR(MetodoDOR metodoDOR) {
+		this.metodoDOR = metodoDOR;
 	}
 	
 	@Override

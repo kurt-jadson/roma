@@ -30,6 +30,10 @@ public class JSFUtils {
 		addMessage(msg, null, FacesMessage.SEVERITY_ERROR);
 	}
 	
+	public static void addInfoMessage(String msg) {
+		addMessage(msg, null, FacesMessage.SEVERITY_INFO);
+	}
+	
 	public static void addMessage(String msg, String clientId, Severity severity) {
 		FacesMessage message = new FacesMessage(severity, msg, null);
 		FacesContext.getCurrentInstance().addMessage(clientId, message);

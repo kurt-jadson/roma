@@ -1,0 +1,106 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/WEB-INF/templates/layout.xhtml">
+
+		<ui:define name="conteudo">
+			<h:form id="configuracoesForm">
+				<div class="mensagem-snippet">
+					<h:messages id="messages" errorClass="alert alert-danger" />
+				</div>
+				<div class="page-header">
+					<h1>#{i18n['configuracoes.title']}</h1>
+				</div>
+				<div class="container-fluid">
+					<h:panelGroup layout="block"
+								  rendered="#{not empty configuracoesController.pesquisador.id}">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<h:outputLabel for="metodoAgrupamento"
+												   value="#{i18n['configuracoes.metodoAgrupamento']}" />
+									<h:selectOneMenu id="metodoAgrupamento"
+													 value="#{configuracoesController.pesquisador.metodoAgrupamento}"
+													 styleClass="form-control">
+										<f:selectItems value="#{configuracoesController.metodosAgrupamento}"
+													   var="metodoAgrupamentoVar" 
+													   itemLabel="#{metodoAgrupamentoVar.descricao}"
+													   itemValue="#{metodoAgrupamentoVar}" />
+									</h:selectOneMenu>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<h:outputLabel for="modeloRegressao"
+												   value="#{i18n['configuracoes.modeloRegressao']}" />
+									<h:selectOneMenu id="modeloRegressao"
+													 value="#{configuracoesController.pesquisador.modeloRegressao}"
+													 styleClass="form-control">
+										<f:selectItems value="#{configuracoesController.modelosRegressao}"
+													   var="modeloRegressaoVar" 
+													   itemLabel="#{modeloRegressaoVar.descricao}"
+													   itemValue="#{modeloRegressaoVar}" />
+									</h:selectOneMenu>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<h:outputLabel for="intervaloConfianca"
+												   value="#{i18n['configuracoes.intervaloConfianca']}" />
+									<h:inputText id="intervaloConfianca"
+												 value="#{configuracoesController.pesquisador.intervaloConfianca}"
+												 validatorMessage="#{i18n['configuracoes.intervaloConfiancao.validatorMessage']}"
+												 styleClass="form-control"
+												 pt:type="number"
+												 pt:min="0"
+												 pt:max="100" />
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<h:outputLabel for="preencherCelulasVazias"
+												   value="#{i18n['configuracoes.preencherCelulasVazias']}" />
+									<h:selectBooleanCheckbox id="preencherCelulasVazias"
+															 value="#{configuracoesController.pesquisador.preencherCelulasVazias}"
+															 styleClass="checkbox inline" />
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<h:outputLabel for="metodoDOR"
+												   value="#{i18n['configuracoes.metodoDOR']}" />
+									<h:selectOneMenu id="metodoDOR"
+													 value="#{configuracoesController.pesquisador.metodoDOR}"
+													 styleClass="form-control">
+										<f:selectItems value="#{configuracoesController.metodosDOR}"
+													   var="metodoDORVar" 
+													   itemLabel="#{metodoDORVar.descricao}"
+													   itemValue="#{metodoDORVar}" />
+									</h:selectOneMenu>
+								</div>
+							</div>
+						</div>
+					</h:panelGroup>
+					<div class="row">
+						<div class="col-md-1">
+							<h:commandButton value="#{i18n['botao.salvar']}"
+											 action="#{configuracoesController.salvar()}"
+											 styleClass="btn btn-default"/>
+						</div>
+					</div>
+				</div>
+			</h:form>
+		</ui:define>
+
+	</ui:composition>
+</html>

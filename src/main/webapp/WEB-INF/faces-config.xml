@@ -19,6 +19,15 @@
 		</navigation-case>
 	</navigation-rule>
 
+	<navigation-rule>
+		<from-view-id>/configuracoes/configuracoes.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>sucesso</from-outcome>
+			<to-view-id>/configuracoes/configuracoes</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
 	<component>
 		<component-type>com.lassitercg.faces.components.sheet</component-type>
 		<component-class>br.com.smadp.component.sheet.Sheet</component-class>

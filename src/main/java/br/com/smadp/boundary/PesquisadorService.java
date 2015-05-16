@@ -11,6 +11,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -34,9 +35,13 @@ public class PesquisadorService implements Serializable {
 	}
 
 	public Pesquisador buscarVinculadoUsuarioLogado() {
-		return buscarPorUsuario(usuarioLogado.get());
+		try {
+			return buscarPorUsuario(usuarioLogado.get());
+		} catch (NoResultException ex) {
+			return new Pesquisador();
+		}
 	}
-	
+
 	public Pesquisador buscarPorUsuario(Usuario usuario) {
 		TypedQuery<Pesquisador> query = em.createNamedQuery(Pesquisador.NQ_BUSCAR_POR_USUARIO,
 				Pesquisador.class);

@@ -1,5 +1,6 @@
 package br.com.smadp.boundary;
 
+import br.com.smadp.entity.Pesquisador;
 import br.com.smadp.entity.Usuario;
 import java.io.Serializable;
 import javax.ejb.Stateless;
@@ -24,6 +25,16 @@ public class UsuarioService implements Serializable {
 		TypedQuery<Usuario> query = em.createNamedQuery(Usuario.NQ_BUSCAR_POR_USERNAME, Usuario.class);
 		query.setParameter(1, username);
 		return query.getSingleResult();
+	}
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public void salvarConfiguracoesPesquisador(Pesquisador pesquisador) {
+		em.merge(pesquisador);
+	}
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public void salvarConfiguracoesUsuario(Usuario usuario) {
+		em.merge(usuario);
 	}
 	
 }
