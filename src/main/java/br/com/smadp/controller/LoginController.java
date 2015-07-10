@@ -1,6 +1,7 @@
 package br.com.smadp.controller;
 
 import br.com.smadp.boundary.UsuarioService;
+import br.com.smadp.entity.Idioma;
 import br.com.smadp.entity.Usuario;
 import br.com.smadp.framework.JSFUtils;
 import br.com.smadp.framework.LoggedIn;
@@ -51,7 +52,7 @@ public class LoginController implements Serializable {
 			usuario = service.buscarPorUsername(usuario.getUsername());
 		} catch (AuthenticationException e) {
 			LOGGER.warning(e.getMessage());
-			JSFUtils.addErrorMessage(JSFUtils.translate("smadp.mensagens.0002"));
+			JSFUtils.addErrorMessage(JSFUtils.translate("smadp.mensagens.0002"), true);
 			return "/login";
 		}
 		return OUTCOME_HOME;
@@ -72,6 +73,7 @@ public class LoginController implements Serializable {
 	public Usuario getUsuario() {
 		if(usuario == null) {
 			usuario = new Usuario();
+			usuario.setIdioma(Idioma.PORTUGUES);
 		}
 		return usuario;
 	}

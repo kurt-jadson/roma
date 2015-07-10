@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:h="http://java.sun.com/jsf/html"
-	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	  xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>#{i18n['system.shell.name']}</title>
@@ -13,6 +13,7 @@
 		<ui:insert name="metadata" />
     </h:head>
     <h:body>
+		<ui:insert name="definicaoMenu" />
 		<p:button style="display:none;" />
         <nav class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container">

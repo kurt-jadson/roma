@@ -3,6 +3,8 @@ package br.com.smadp.entity;
 import br.com.smadp.framework.PersistentEntity;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,6 +27,9 @@ public class Usuario implements PersistentEntity<Long> {
 	@NotNull
 	private String username;
 	private String password;
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private Idioma idioma;
 
 	@Override
 	public boolean isNew() {
@@ -56,6 +61,14 @@ public class Usuario implements PersistentEntity<Long> {
 		this.password = password;
 	}
 
+	public Idioma getIdioma() {
+		return idioma;
+	}
+
+	public void setIdioma(Idioma idioma) {
+		this.idioma = idioma;
+	}
+	
 	@Override
 	public int hashCode() {
 		int hash = 7;

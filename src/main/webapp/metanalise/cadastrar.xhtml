@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:h="http://java.sun.com/jsf/html"
-	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	  xmlns:s="http://www.lassitercg.com/jsf"
 	  xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	  xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/WEB-INF/templates/layout.xhtml">
+		<ui:define name="definicaoMenu">
+			<ui:param name="menu" value="metanalise" />
+			<ui:param name="submenu" value="cadastrar" />
+		</ui:define>
+
 		<ui:define name="metadata">
 			<f:metadata>
 				<f:viewParam name="metanalise" 
@@ -19,7 +24,9 @@
 		<ui:define name="conteudo">
 			<h:form id="metanaliseForm">
 				<div class="mensagem-snippet">
-					<h:messages id="messages" errorClass="alert alert-danger" />
+					<h:messages id="messages" 
+								errorClass="alert alert-danger"
+								infoClass="alert alert-info" />
 				</div>
 				<div class="page-header">
 					<h1>#{i18n['metanalise.cadastro']}</h1>
@@ -35,6 +42,23 @@
 											 required="true"
 											 requiredMessage="#{i18n['smadp.mensagens.0001']}"
 											 styleClass="form-control #{not component.valid ? 'error' : ''}" />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<h:outputLabel for="efeito"
+											   value="#{i18n['metanalise.efeito']}" />
+								<h:selectOneMenu id="efeito"
+												 value="#{metanaliseController.metanalise.efeito}"
+												 styleClass="form-control">
+									<f:selectItems value="#{metanaliseController.efeitos}"
+												   var="efeitoVar" 
+												   itemLabel="#{i18n[efeitoVar.descricao]}"
+												   itemValue="#{efeitoVar}" />
+									<f:ajax render="metodoAgrupamento" />
+								</h:selectOneMenu>
 							</div>
 						</div>
 					</div>
@@ -57,26 +81,10 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
-								<h:outputLabel for="modeloRegressao"
-											   value="#{i18n['metanalise.modeloRegressao']}" />
-								<h:selectOneMenu id="modeloRegressao"
-												 value="#{metanaliseController.metanalise.modeloRegressao}"
-												 styleClass="form-control">
-									<f:selectItems value="#{metanaliseController.modelosRegressao}"
-												   var="modeloRegressaoVar" 
-												   itemLabel="#{modeloRegressaoVar.descricao}"
-												   itemValue="#{modeloRegressaoVar}" />
-								</h:selectOneMenu>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<div class="form-group">
 								<h:outputLabel for="intervaloConfianca"
 											   value="#{i18n['metanalise.intervaloConfianca']}" />
 								<h:inputText id="intervaloConfianca"
-										     value="#{metanaliseController.metanalise.intervaloConfianca}"
+											 value="#{metanaliseController.metanalise.intervaloConfianca}"
 											 validatorMessage="#{i18n['metanalise.intervaloConfiancao.validatorMessage']}"
 											 styleClass="form-control"
 											 pt:type="number"
@@ -93,22 +101,6 @@
 								<h:selectBooleanCheckbox id="preencherCelulasVazias"
 														 value="#{metanaliseController.metanalise.preencherCelulasVazias}"
 														 styleClass="checkbox inline" />
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<div class="form-group">
-								<h:outputLabel for="metodoDOR"
-											   value="#{i18n['metanalise.metodoDOR']}" />
-								<h:selectOneMenu id="metodoDOR"
-												 value="#{metanaliseController.metanalise.metodoDOR}"
-												 styleClass="form-control">
-									<f:selectItems value="#{metanaliseController.metodosDOR}"
-												   var="metodoDORVar" 
-												   itemLabel="#{metodoDORVar.descricao}"
-												   itemValue="#{metodoDORVar}" />
-								</h:selectOneMenu>
 							</div>
 						</div>
 					</div>
@@ -154,6 +146,10 @@
 													return false;">
 										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 									</button>
+									<button class="btn btn-default btn-space"
+											onclick="return false;">
+										<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+									</button>
 									<h:commandButton id="addRowBtn" 
 													 styleClass="hidden">
 										<f:ajax render="metanaliseForm:sheet"
@@ -179,6 +175,10 @@
 													return false;">
 										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 									</button>
+									<button class="btn btn-default btn-space"
+											onclick="return false;">
+										<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+									</button>
 									<h:commandButton id="addColBtn"
 													 styleClass="hidden">
 										<f:ajax execute="@this nomeColuna"
@@ -193,8 +193,21 @@
 								<div class="metanalise-control-linha">Desfazer</div>
 								<div>
 									<button class="btn btn-default btn-space"
-											onclick="PF('widget_metanaliseForm_sheet').ht.undo(); return false;">
+											onclick="PF('widget_metanaliseForm_sheet').ht.undo();
+													return false;">
 										<span><h:graphicImage library="images" name="undo.png" /></span>
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group metanalise-control">
+								<div class="metanalise-control-linha">Refazer</div>
+								<div>
+									<button class="btn btn-default btn-space"
+											onclick="PF('widget_metanaliseForm_sheet').ht.redo();
+													return false;">
+										<span><h:graphicImage library="images" name="redo.png" /></span>
 									</button>
 								</div>
 							</div>

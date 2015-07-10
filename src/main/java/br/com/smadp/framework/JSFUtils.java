@@ -4,7 +4,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.el.ExpressionFactory;
 import javax.el.ValueExpression;
-import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
@@ -26,12 +25,27 @@ public class JSFUtils {
 		addMessage(msg, null, severity);
 	}
 	
+	public static void addMessage(String msg, Severity severity, Boolean keepMessages) {
+		addMessage(msg, null, severity);
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(keepMessages);
+	}
+	
 	public static void addErrorMessage(String msg) {
 		addMessage(msg, null, FacesMessage.SEVERITY_ERROR);
 	}
 	
+	public static void addErrorMessage(String msg, Boolean keep) {
+		addMessage(msg, null, FacesMessage.SEVERITY_ERROR);
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(keep);
+	}
+	
 	public static void addInfoMessage(String msg) {
 		addMessage(msg, null, FacesMessage.SEVERITY_INFO);
+	}
+	
+	public static void addInfoMessage(String msg, Boolean keep) {
+		addMessage(msg, null, FacesMessage.SEVERITY_INFO);
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(keep);
 	}
 	
 	public static void addMessage(String msg, String clientId, Severity severity) {

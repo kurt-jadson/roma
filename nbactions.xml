@@ -4,7 +4,18 @@
             <actionName>CUSTOM-deploy 8081</actionName>
             <displayName>deploy 8081</displayName>
             <goals>
+				<goal>wildfly:undeploy</goal>
                 <goal>wildfly:deploy</goal>
+            </goals>
+            <activatedProfiles>
+                <activatedProfile>wildfly-local</activatedProfile>
+            </activatedProfiles>
+        </action>
+        <action>
+            <actionName>CUSTOM-undeploy 8081</actionName>
+            <displayName>undeploy 8081</displayName>
+            <goals>
+				<goal>wildfly:undeploy</goal>
             </goals>
             <activatedProfiles>
                 <activatedProfile>wildfly-local</activatedProfile>

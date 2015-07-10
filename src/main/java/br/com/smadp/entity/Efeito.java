@@ -4,19 +4,19 @@ package br.com.smadp.entity;
  *
  * @author kurt
  */
-public enum ModeloRegressao {
-
-	A("A"),
-	B("B");
+public enum Efeito {
+	
+	FIXO("metanalise.efeitoFixo"),
+	ALEATORIO("metanalise.efeitoAleatorio");
 	
 	private final String descricao;
 	
-	private ModeloRegressao(String descricao) {
+	private Efeito(String descricao) {
 		this.descricao = descricao;
 	}
 
 	public String getDescricao() {
 		return descricao;
 	}
-
+	
 }

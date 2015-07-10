@@ -3,6 +3,7 @@ package br.com.smadp.boundary;
 import br.com.smadp.entity.Metanalise;
 import br.com.smadp.entity.MetanaliseEtapa;
 import br.com.smadp.entity.MetanaliseMetanaliseEtapa;
+import br.com.smadp.entity.MetanaliseRow;
 import br.com.smadp.entity.Pesquisador;
 import br.com.smadp.entity.Usuario;
 import br.com.smadp.exception.SmadpException;
@@ -53,6 +54,7 @@ public class MetanaliseService {
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void salvar(Metanalise metanalise) throws SmadpException {
 		validarTitulo(metanalise);
+		validarEstudos(metanalise);
 
 		TypedQuery<Pesquisador> query = em.createNamedQuery(Pesquisador.NQ_BUSCAR_POR_USUARIO,
 				Pesquisador.class);
@@ -67,6 +69,12 @@ public class MetanaliseService {
 			em.merge(metanalise);
 		}
 	}
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public void excluir(Metanalise metanalise) {
+		metanalise = em.find(Metanalise.class, metanalise.getId());
+		em.remove(metanalise);
+	}
 
 	private void validarTitulo(Metanalise metanalise) throws SmadpException {
 		TypedQuery<Long> query = em.createNamedQuery(Metanalise.NQ_COUNT_TITULO, Long.class);
@@ -75,6 +83,17 @@ public class MetanaliseService {
 		Long count = query.getSingleResult();
 		if (count > 0) {
 			throw new SmadpException("smadp.mensagens.1000");
+		}
+	}
+	
+	private void validarEstudos(Metanalise metanalise) throws SmadpException {
+		for(MetanaliseRow row : metanalise.getRows()) {
+			if(row.getNumero() == null) {
+				throw new SmadpException("smadp.mensagens.1002");
+			}
+			if(row.getTitulo() == null || row.getTitulo().isEmpty()) {
+				throw new SmadpException("smadp.mensagens.1003");
+			}
 		}
 	}
 

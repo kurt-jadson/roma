@@ -10,6 +10,10 @@
 		</resource-bundle>
 	</application>
 	
+	<lifecycle>
+		<phase-listener>br.com.smadp.framework.LanguageListener</phase-listener>
+	</lifecycle>
+	
 	<navigation-rule>
 		<from-view-id>/metanalise/cadastrar.xhtml</from-view-id>
 		<navigation-case>

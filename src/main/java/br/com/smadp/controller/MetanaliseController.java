@@ -3,13 +3,12 @@ package br.com.smadp.controller;
 import br.com.smadp.boundary.MetanaliseColService;
 import br.com.smadp.boundary.MetanaliseService;
 import br.com.smadp.boundary.PesquisadorService;
+import br.com.smadp.entity.Efeito;
 import br.com.smadp.entity.Metanalise;
 import br.com.smadp.entity.MetanaliseCol;
 import br.com.smadp.entity.MetanaliseRow;
 import br.com.smadp.entity.MetanaliseRowCol;
 import br.com.smadp.entity.MetodoAgrupamento;
-import br.com.smadp.entity.MetodoDOR;
-import br.com.smadp.entity.ModeloRegressao;
 import br.com.smadp.entity.Pesquisador;
 import br.com.smadp.exception.SmadpException;
 import br.com.smadp.framework.JSFUtils;
@@ -54,6 +53,7 @@ public class MetanaliseController implements Serializable {
 	private Metanalise metanalise;
 	private Sheet sheet;
 	private String nomeColuna;
+	private Pesquisador pesquisador;
 
 	public void loadMetanalise() {
 		metanalise = metanaliseService.buscarPorId(getMetanalise().getId());
@@ -69,6 +69,9 @@ public class MetanaliseController implements Serializable {
 	public Metanalise getMetanalise() {
 		if (metanalise == null) {
 			metanalise = new Metanalise();
+			metanalise.setMetodoAgrupamento(getPesquisador().getMetodoAgrupamento());
+			metanalise.setIntervaloConfianca(getPesquisador().getIntervaloConfianca());
+			metanalise.setPreencherCelulasVazias(getPesquisador().getPreencherCelulasVazias());
 		}
 		return metanalise;
 	}
@@ -105,21 +108,27 @@ public class MetanaliseController implements Serializable {
 	public List<Pesquisador> getPesquisadores() {
 		if(pesquisadores == null) {
 			pesquisadores = pesquisadorService.buscarTodos();
-			pesquisadores.remove(pesquisadorService.buscarVinculadoUsuarioLogado());
+			pesquisadores.remove(getPesquisador());
 		}
 		return pesquisadores;
 	}
 	
+	private Pesquisador getPesquisador() {
+		if(pesquisador == null) {
+			pesquisador = pesquisadorService.buscarVinculadoUsuarioLogado();
+		}
+		return pesquisador;
+	}
+	
 	public MetodoAgrupamento[] getMetodosAgrupamento() {
+		if(Efeito.FIXO.equals(getMetanalise().getEfeito())) {
+			return new MetodoAgrupamento[]{MetodoAgrupamento.MANTEL_HAENSZEL};
+		}
 		return MetodoAgrupamento.values();
 	}
 	
-	public ModeloRegressao[] getModelosRegressao() {
-		return ModeloRegressao.values();
-	}
-
-	public MetodoDOR[] getMetodosDOR() {
-		return MetodoDOR.values();
+	public Efeito[] getEfeitos() {
+		return Efeito.values();
 	}
 	
 	public void setEstudos(List<MetanaliseRow> estudos) {
@@ -180,6 +189,12 @@ public class MetanaliseController implements Serializable {
 			}
 		}
 		return null;
+	}
+	
+	public void excluir(Metanalise metanalise) {
+		metanaliseService.excluir(metanalise);
+		JSFUtils.addInfoMessage(JSFUtils.translate("smadp.mensagens.0004"));
+		metanalises = null;
 	}
 
 	public void adicionarLinha() {

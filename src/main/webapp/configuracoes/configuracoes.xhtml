@@ -1,14 +1,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:h="http://java.sun.com/jsf/html"
-	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	  xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	  xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/WEB-INF/templates/layout.xhtml">
-
+		<ui:define name="definicaoMenu">
+			<ui:param name="menu" value="configuracoes" />
+		</ui:define>
+		
 		<ui:define name="conteudo">
 			<h:form id="configuracoesForm">
 				<div class="mensagem-snippet">
-					<h:messages id="messages" errorClass="alert alert-danger" />
+					<h:messages id="messages" errorClass="alert alert-danger"
+								infoClass="alert alert-info"/>
 				</div>
 				<div class="page-header">
 					<h1>#{i18n['configuracoes.title']}</h1>
@@ -16,6 +20,22 @@
 				<div class="container-fluid">
 					<h:panelGroup layout="block"
 								  rendered="#{not empty configuracoesController.pesquisador.id}">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group">
+									<h:outputLabel for="idioma"
+												   value="#{i18n['configuracoes.idioma']}" />
+									<h:selectOneMenu id="idioma"
+													 value="#{configuracoesController.pesquisador.usuario.idioma}"
+													 styleClass="form-control">
+										<f:selectItems value="#{configuracoesController.idiomas}"
+													   var="idiomaVar" 
+													   itemLabel="#{i18n[idiomaVar.descricao]}"
+													   itemValue="#{idiomaVar}" />
+									</h:selectOneMenu>
+								</div>
+							</div>
+						</div>						
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group">
@@ -28,22 +48,6 @@
 													   var="metodoAgrupamentoVar" 
 													   itemLabel="#{metodoAgrupamentoVar.descricao}"
 													   itemValue="#{metodoAgrupamentoVar}" />
-									</h:selectOneMenu>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group">
-									<h:outputLabel for="modeloRegressao"
-												   value="#{i18n['configuracoes.modeloRegressao']}" />
-									<h:selectOneMenu id="modeloRegressao"
-													 value="#{configuracoesController.pesquisador.modeloRegressao}"
-													 styleClass="form-control">
-										<f:selectItems value="#{configuracoesController.modelosRegressao}"
-													   var="modeloRegressaoVar" 
-													   itemLabel="#{modeloRegressaoVar.descricao}"
-													   itemValue="#{modeloRegressaoVar}" />
 									</h:selectOneMenu>
 								</div>
 							</div>
@@ -71,22 +75,6 @@
 									<h:selectBooleanCheckbox id="preencherCelulasVazias"
 															 value="#{configuracoesController.pesquisador.preencherCelulasVazias}"
 															 styleClass="checkbox inline" />
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group">
-									<h:outputLabel for="metodoDOR"
-												   value="#{i18n['configuracoes.metodoDOR']}" />
-									<h:selectOneMenu id="metodoDOR"
-													 value="#{configuracoesController.pesquisador.metodoDOR}"
-													 styleClass="form-control">
-										<f:selectItems value="#{configuracoesController.metodosDOR}"
-													   var="metodoDORVar" 
-													   itemLabel="#{metodoDORVar.descricao}"
-													   itemValue="#{metodoDORVar}" />
-									</h:selectOneMenu>
 								</div>
 							</div>
 						</div>

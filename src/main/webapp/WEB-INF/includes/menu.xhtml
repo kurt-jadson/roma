@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:ui="http://java.sun.com/jsf/facelets"
-	  xmlns:h="http://java.sun.com/jsf/html">
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html">
 	<ui:composition>
 		<h:form>
 			<ul class="nav navbar-nav">
-				<li class="dropdown active">
+				<li class="dropdown #{menu eq 'metanalise' ? 'active' : ''}">
 					<a href="#" 
 					   class="dropdown-toggle" 
 					   data-toggle="dropdown" 
@@ -14,12 +14,12 @@
 						#{i18n['menu.metanalises']} <span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu" role="menu">
-						<li>
+						<li class="#{submenu eq 'cadastrar' ? 'active' : ''}">
 							<a href="/metanalise/cadastrar.xhtml">
 								#{i18n['menu.metanalises.cadastrar']}
 							</a>
 						</li>
-						<li>
+						<li class="#{submenu eq 'listar' ? 'active' : ''}">
 							<a href="/metanalise/listar.xhtml">
 								#{i18n['menu.metanalises.listar']}
 							</a>
@@ -45,15 +45,17 @@
 						<li><a href="#">#{i18n['menu.calculos.vieses']}</a></li>
 					</ul>
 				</li>
-				<li>
+				<li class="#{menu eq 'configuracoes' ? 'active' : ''}">
 					<a href="/configuracoes/configuracoes.xhtml">
 						#{i18n['menu.configuracoes']}
 					</a>
 				</li>
 				<li><a href="#">#{i18n['menu.ajuda']}</a></li>
-				<li><a href="#">#{i18n['menu.autores']}</a></li>
+				<li class="#{menu eq 'autores' ? 'active' : ''}">
+					<a href="/doc/autores.xhtml">#{i18n['menu.autores']}</a>
+				</li>
 				<li>
-					<h:commandLink action="#{loginController.logout()}" value="Sair" />
+					<h:commandLink action="#{loginController.logout()}" value="#{i18n['menu.sair']}" />
 				</li>
 			</ul>
 		</h:form>

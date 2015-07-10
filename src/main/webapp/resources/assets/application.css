@@ -14,12 +14,17 @@ body {
 }
 
 .home-module-icon {
-    display: inline-block;
     width: 64px;
     height: 64px;
     border: 1px solid #ccc;
-    background-color: #eee;
     margin: 5px;
+    float: left;
+    text-align: center;
+}
+
+.home-module-icon span img {
+    position: relative;
+    top: 5px;
 }
 
 .dashboard-metanalise span.dashboard-label {
@@ -63,4 +68,15 @@ label:after {
 
 .btn-space {
     margin-top: 4px;
+}
+
+.metanalise-remove {
+    color: #337ab7;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.metanalise-remove:hover {
+    color: #23527c;
+    text-decoration: underline;
 }

@@ -46,7 +46,7 @@ public class Metanalise implements PersistentEntity<Long> {
 	@NotNull
 	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
 	private Date dataInclusao;
-	@OneToMany(mappedBy = "metanalise", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "metanalise", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private final List<MetanaliseMetanaliseEtapa> etapas;
 	@OneToMany(mappedBy = "metanalise", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	private List<MetanaliseRow> rows;
@@ -54,19 +54,16 @@ public class Metanalise implements PersistentEntity<Long> {
 	private List<MetanaliseCol> cols;
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	private MetodoAgrupamento metodoAgrupamento;
+	private Efeito efeito;
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	private ModeloRegressao modeloRegressao;
+	private MetodoAgrupamento metodoAgrupamento;
 	@NotNull
 	@Min(0)
 	@Max(100)
 	private Integer intervaloConfianca;
 	@NotNull
 	private Boolean preencherCelulasVazias;
-	@NotNull
-	@Enumerated(EnumType.STRING)
-	private MetodoDOR metodoDOR;
 	@NotNull
 	private Boolean permitirPesquisadorAuxiliar;
 	@ManyToOne
@@ -77,6 +74,7 @@ public class Metanalise implements PersistentEntity<Long> {
 		intervaloConfianca = 95;
 		preencherCelulasVazias = Boolean.TRUE;
 		permitirPesquisadorAuxiliar = Boolean.FALSE;
+		efeito = Efeito.FIXO;
 	}
 
 	@Override
@@ -142,20 +140,20 @@ public class Metanalise implements PersistentEntity<Long> {
 		this.cols = cols;
 	}
 
+	public Efeito getEfeito() {
+		return efeito;
+	}
+
+	public void setEfeito(Efeito efeito) {
+		this.efeito = efeito;
+	}
+	
 	public MetodoAgrupamento getMetodoAgrupamento() {
 		return metodoAgrupamento;
 	}
 
 	public void setMetodoAgrupamento(MetodoAgrupamento metodoAgrupamento) {
 		this.metodoAgrupamento = metodoAgrupamento;
-	}
-
-	public ModeloRegressao getModeloRegressao() {
-		return modeloRegressao;
-	}
-
-	public void setModeloRegressao(ModeloRegressao modeloRegressao) {
-		this.modeloRegressao = modeloRegressao;
 	}
 
 	public Integer getIntervaloConfianca() {
@@ -172,14 +170,6 @@ public class Metanalise implements PersistentEntity<Long> {
 
 	public void setPreencherCelulasVazias(Boolean preencherCelulasVazias) {
 		this.preencherCelulasVazias = preencherCelulasVazias;
-	}
-
-	public MetodoDOR getMetodoDOR() {
-		return metodoDOR;
-	}
-
-	public void setMetodoDOR(MetodoDOR metodoDOR) {
-		this.metodoDOR = metodoDOR;
 	}
 
 	public Boolean getPermitirPesquisadorAuxiliar() {

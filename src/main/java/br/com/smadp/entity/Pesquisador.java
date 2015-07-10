@@ -36,17 +36,11 @@ public class Pesquisador implements PersistentEntity<Long> {
 	@Enumerated(EnumType.STRING)
 	private MetodoAgrupamento metodoAgrupamento;
 	@NotNull
-	@Enumerated(EnumType.STRING)
-	private ModeloRegressao modeloRegressao;
-	@NotNull
 	@Min(0)
 	@Max(100)
 	private Integer intervaloConfianca;
 	@NotNull
 	private Boolean preencherCelulasVazias;
-	@NotNull
-	@Enumerated(EnumType.STRING)
-	private MetodoDOR metodoDOR;
 
 	@Override
 	public boolean isNew() {
@@ -70,14 +64,6 @@ public class Pesquisador implements PersistentEntity<Long> {
 		this.metodoAgrupamento = metodoAgrupamento;
 	}
 
-	public ModeloRegressao getModeloRegressao() {
-		return modeloRegressao;
-	}
-
-	public void setModeloRegressao(ModeloRegressao modeloRegressao) {
-		this.modeloRegressao = modeloRegressao;
-	}
-
 	public Integer getIntervaloConfianca() {
 		return intervaloConfianca;
 	}
@@ -92,14 +78,6 @@ public class Pesquisador implements PersistentEntity<Long> {
 
 	public void setPreencherCelulasVazias(Boolean preencherCelulasVazias) {
 		this.preencherCelulasVazias = preencherCelulasVazias;
-	}
-
-	public MetodoDOR getMetodoDOR() {
-		return metodoDOR;
-	}
-
-	public void setMetodoDOR(MetodoDOR metodoDOR) {
-		this.metodoDOR = metodoDOR;
 	}
 	
 	@Override

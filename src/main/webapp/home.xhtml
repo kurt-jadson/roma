@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-	  xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="/WEB-INF/templates/layout.xhtml">
 		<ui:define name="conteudo">
 			<h:form styleClass="center">
@@ -24,13 +24,41 @@
 						</ui:repeat>
 					</div>
 					<div class="col-md-4">
-						<div class="home-module-icon"></div>
-						<div class="home-module-icon"></div>
-						<div class="home-module-icon"></div>
-						<div class="home-module-icon"></div>
-						<div class="home-module-icon"></div>
-						<div class="home-module-icon"></div>
-						<div class="home-module-icon"></div>
+						<a href="/metanalise/cadastrar.xhtml" title="#{i18n['menu.metanalises.listar']}">
+							<div class="home-module-icon">
+								<span><h:graphicImage library="images" name="create.png" /></span>
+							</div>
+						</a>
+						<a href="/metanalise/listar.xhtml" title="#{i18n['menu.metanalises.cadastrar']}">
+							<div class="home-module-icon">
+								<span><h:graphicImage library="images" name="list.png" /></span>
+							</div>
+						</a>
+						<a href="#" title="#{i18n['menu.analises']}">
+							<div class="home-module-icon">
+								<span><h:graphicImage library="images" name="analysis.png" /></span>
+							</div>
+						</a>
+						<a href="#" title="#{i18n['menu.vieses']}">
+							<div class="home-module-icon">
+								<span><h:graphicImage library="images" name="bias.png" /></span>
+							</div>
+						</a>
+						<a href="/configuracoes/configuracoes.xhtml" title="#{i18n['menu.configuracoes']}">
+							<div class="home-module-icon">
+								<span><h:graphicImage library="images" name="settings.png" /></span>
+							</div>
+						</a>
+						<a href="/doc/autores.xhtml" title="#{i18n['menu.autores']}">
+							<div class="home-module-icon">
+								<span><h:graphicImage library="images" name="author.png" /></span>
+							</div>
+						</a>
+						<a href="#" title="#{i18n['menu.ajuda']}">
+							<div class="home-module-icon">
+								<span><h:graphicImage library="images" name="help.png" /></span>
+							</div>
+						</a>
 					</div>
 				</div>
 			</h:form>
